@@ -71,6 +71,18 @@ const events: Event[] = [
         fullName: "Serkan Alc",
         title: "Bootcamp Lead",
       },
+      {
+        fullName: "Halil İbrahim Çakıroğlu",
+        title: "Lead UI/UX Designer",
+      },
+      {
+        fullName: "Zeynep Alkoç",
+        title: "Front-End Developer",
+      },
+      {
+        fullName: "Furkan Portakal",
+        title: "Sr. Frontend Developer",
+      },
     ],
     sessions: [
       {
@@ -205,6 +217,27 @@ const events: Event[] = [
         startTime: "21.00",
         endTime: "23.00",
         speakerName: "Tekin Ağgül",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Next.js Server Actions & Mutations",
+        startTime: "21.00",
+        endTime: "23.00",
+        speakerName: "Furkan Portakal",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Next.js Authentication ve Database",
+        startTime: "21.00",
+        endTime: "23.00",
+        speakerName: "Furkan Portakal",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Next.js Route Handlers ve Deployment",
+        startTime: "21.00",
+        endTime: "23.00",
+        speakerName: "Furkan Portakal",
       },
     ],
     sponsors: [],
