@@ -2,6 +2,258 @@ import { Event } from "@/types";
 
 const events: Event[] = [
   {
+    id: 6,
+    navigable: true,
+    name: "Foundations of Web Development Certification Course",
+    heroDescription:
+      "🚀 Foundations of Web Development Certification Course ile HTML, CSS, JavaScript ve React temellerini proje odaklı bir şekilde öğren. Tamamen ücretsiz, online ve sertifikalı bu bootcamp, modern web geliştirme yolculuğuna sağlam bir başlangıç yapman için tasarlandı.",
+    cardDescription:
+      "📅 Tamamen online, kendi hızında ilerleyebileceğin bir öğrenme deneyimi. 💡 Topluluk desteği, mentor rehberliği ve proje tabanlı öğrenme yaklaşımı seni bekliyor. Kendi web yolculuğunu başlatmaya hazır mısın? 🌟 Şimdi kayıt ol ve geleceğini kodlamaya başla!",
+    location: {
+      name: "Online",
+      subtext: "Platform: Online • Zaman Dilimi: UTC+3",
+    },
+    registerLink:
+      "https://togather.lodos.io/events/foundations-frontend-web-development-certification-course-99241793086215583681/tickets",
+    videoUrl: "",
+    date: "2026-03-09T20:30:00+03:00",
+    organizers: [
+      {
+        id: 1,
+        name: "Serkan Alc",
+        designation: "Bootcamp Lead & Organizer",
+        image: "/images/organizers/serkan-alc.webp",
+      },
+      {
+        id: 2,
+        name: "Mutlu Özkurt",
+        designation: "Co-Organizer",
+        image: "/images/organizers/furkan-unsalan.webp",
+      },
+      {
+        id: 3,
+        name: "Esra Kelleci",
+        designation: "Lead Instructor",
+        image: "/images/organizers/esra-kelleci.webp",
+      },
+    ],
+    speakers: [
+      {
+        fullName: "Esra Kelleci",
+        title: "JavaScript Instructor",
+      },
+      {
+        fullName: "İsmail Şimşek",
+        title: "Staff Software Engineer",
+        company: "Grafana",
+      },
+      {
+        fullName: "Zafer Ayan",
+        title: "React Instructor",
+      },
+      {
+        fullName: "Hüseyin Gülcü",
+        title: "Advanced React Instructor",
+      },
+      {
+        fullName: "Tekin Ağgül",
+        title: "Next.js Instructor",
+      },
+      {
+        fullName: "Melis Dinçol",
+        title: "Framework Specialist",
+      },
+      {
+        fullName: "Feyza Demirel",
+        title: "Next.js Alternative Session",
+      },
+      {
+        fullName: "Serkan Alc",
+        title: "Bootcamp Lead",
+      },
+    ],
+    sessions: [
+      {
+        room: "Ana Salon",
+        topic: "Keynote - Bootcamp Opening",
+        startTime: "20.30",
+        endTime: "22.30",
+        speakerName: "Serkan Alc, Mutlu Özkurt, Esra Kelleci",
+      },
+      {
+        room: "Ana Salon",
+        topic: "HTML & CSS Fundamentals",
+        startTime: "20.30",
+        endTime: "22.30",
+        speakerName: "Zeynep Alkoç",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Modern JavaScript Fundamentals",
+        startTime: "20.30",
+        endTime: "22.30",
+        speakerName: "Esra Kelleci",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Webinar Session",
+        startTime: "20.30",
+        endTime: "22.30",
+        speakerName: "Serkan Alc",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Advanced JavaScript & Async Programming",
+        startTime: "20.30",
+        endTime: "22.30",
+        speakerName: "Esra Kelleci",
+      },
+      {
+        room: "Ana Salon",
+        topic: "UI/UX for Developers",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Halil İbrahim Çakıroğlu",
+      },
+      {
+        room: "Ana Salon",
+        topic: "TypeScript Introduction & Fundamentals",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "İsmail Şimşek",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Advanced TypeScript",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "İsmail Şimşek",
+      },
+      {
+        room: "Ana Salon",
+        topic: "React Components & Architecture",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Zafer Ayan",
+      },
+      {
+        room: "Ana Salon",
+        topic: "React State Management & Events",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Zafer Ayan",
+      },
+      {
+        room: "Ana Salon",
+        topic: "React Side Effects & Persistence",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Zafer Ayan",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Frameworks Overview Webinar",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Melis Dinçol",
+      },
+      {
+        room: "Ana Salon",
+        topic: "React Context API & Advanced State",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Hüseyin Gülcü",
+      },
+      {
+        room: "Ana Salon",
+        topic: "HTTP Requests & Async Operations",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Hüseyin Gülcü",
+      },
+      {
+        room: "Ana Salon",
+        topic: "React Router & Performance",
+        startTime: "21.00",
+        endTime: "23.00",
+        speakerName: "Hüseyin Gülcü",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Next.js App Router & Routing",
+        startTime: "21.00",
+        endTime: "23.00",
+        speakerName: "Tekin Ağgül",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Next.js Server Components & Data Fetching",
+        startTime: "21.00",
+        endTime: "23.00",
+        speakerName: "Tekin Ağgül",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Next.js Alternative Session",
+        startTime: "21.00",
+        endTime: "23.00",
+        speakerName: "Feyza Demirel",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Next.js Client Components & Interactivity",
+        startTime: "21.00",
+        endTime: "23.00",
+        speakerName: "Tekin Ağgül",
+      },
+    ],
+    sponsors: [],
+    tickets: [
+      {
+        type: "Standart Ticket",
+        description:
+          "🎫 Standart Ticket – Öğrenme Deneyimine Tam Erişim\n\nStandart Ticket, bootcamp sürecine eksiksiz şekilde dahil olmanızı ve öğrenme deneyimini kendi temponuzda sürdürmenizi sağlar.",
+        price: 0,
+        link: "https://togather.lodos.io/events/foundations-frontend-web-development-certification-course-99241793086215583681/tickets",
+        perks: [
+          "🎥 Canlı eğitim kayıtlarına tam erişim elde edersiniz. Kaçırdığınız ya da tekrar etmek istediğiniz oturumları dilediğiniz zaman izleyebilirsiniz.",
+          "📄 Eğitmenler tarafından hazırlanan kapsamlı eğitim dökümantasyonlarına erişerek öğrenme sürecinizi derinleştirir, bilgilerinizi kalıcı hâle getirebilirsiniz.",
+          "Standart Ticket, esnek, erişilebilir ve odaklı bir öğrenme deneyimi sunar. Bootcamp'e dahil olun, süreci kendi ritminizde takip edin.",
+        ],
+      },
+      {
+        type: "Certification Access Ticket",
+        description:
+          "🏅 Certification Ticket, program sürecine resmi, ölçümlenebilir ve mentör destekli olarak dahil olmanızı sağlar. Süreci bitirmeniz sonucu sertifika almaya hak kazanacaksınız.",
+        price: 500,
+        link: "https://togather.lodos.io/events/foundations-frontend-web-development-certification-course-99241793086215583681/tickets",
+        perks: [
+          "🍀 Gerçek proje ödevleri üzerinde çalışır, çıktılarınız için detaylı ve nitelikli geri bildirim alırsınız.",
+          "🧠 Süreç boyunca teknik destek ve mentörlük erişimine sahip olursunuz.",
+          "🎓 Program kriterlerini başarıyla tamamlamanız halinde sertifika almaya ve seçili programlarımız için burs olanaklarına hak kazanırsınız.",
+          "Certification Ticket, yalnızca bir katılım bileti değil; değerlendirilen, desteklenen ve belgelendirilen bir öğrenme deneyimidir.",
+        ],
+      },
+    ],
+    images: [
+      "/images/events/mobile-developer-summit-2024/1.webp",
+      "/images/events/mobile-developer-summit-2024/2.webp",
+      "/images/events/mobile-developer-summit-2024/3.webp",
+    ],
+    initialMetrics: [
+      { title: "Eğitim Süresi (Hafta)", value: 7 },
+      { title: "Canlı Oturum Sayısı", value: 20 },
+      { title: "Proje Sayısı", value: 3 },
+    ],
+    colorPalette: {
+      text: "250, 6.98%, 16.86%",
+      accent: "199.53, 75.44%, 77.65%",
+      primary: "244.29, 100%, 97.25%",
+      secondary: "250, 6.98%, 16.86%",
+      background: "0, 0%, 100%",
+    },
+  },
+  {
     id: 5,
     navigable: true,
     name: "Web Developer Conference 2025",
