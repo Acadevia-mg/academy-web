@@ -429,9 +429,16 @@ export default function SessionContainer({
                         {session.speakerName}
                       </p>
                       <div className="flex items-center justify-between">
-                        <p className="text-sm font-semibold text-color-text whitespace-nowrap">
-                          {session.startTime} - {session.endTime}
-                        </p>
+                        <div className="flex flex-col gap-0.5">
+                          {session.eventDate && (
+                            <p className="text-sm text-gray-500 font-medium">
+                              {formatIsoDate(session.eventDate)}
+                            </p>
+                          )}
+                          <p className="text-sm font-semibold text-color-text whitespace-nowrap">
+                            {session.startTime} - {session.endTime}
+                          </p>
+                        </div>
                         {!isPastEvent && (
                           <div className="flex items-center gap-2">
                             {hasConflict && (
@@ -489,6 +496,9 @@ export default function SessionContainer({
 
                   {/* Right: Time + Checkbox */}
                   <div className="flex flex-col items-end gap-2 shrink-0">
+                    {session.eventDate && (
+                      <p className="text-sm text-gray-500 font-medium">{formatIsoDate(session.eventDate)}</p>
+                    )}
                     <p className="text-sm font-semibold text-color-text whitespace-nowrap">
                       {session.startTime} - {session.endTime}
                     </p>

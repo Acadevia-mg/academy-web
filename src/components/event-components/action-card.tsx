@@ -33,7 +33,11 @@ const ActionCard: React.FC<ActionCardProps> = ({
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 lg:pt-0 pt-8">
               {name} Yaklaşıyor!
             </h2>
-            <p className="text-gray-700 text-base lg:text-lg">{description}</p>
+            <div className="space-y-2">
+              {description?.split("\n").map((line, i) => (
+                <p key={i} className="text-gray-700 text-base lg:text-lg">{line}</p>
+              ))}
+            </div>
             <div className="flex justify-center lg:justify-start space-x-4 pt-2">
               <span className="text-lg font-bold text-[#4d002f]">
                 {currentYear}
@@ -67,7 +71,11 @@ const ActionCard: React.FC<ActionCardProps> = ({
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
               {title}
             </h2>
-            <p className="text-gray-700 text-base lg:text-lg">{description}</p>
+            <div className="space-y-2">
+              {description?.split("\n").map((line, i) => (
+                <p key={i} className="text-gray-700 text-base lg:text-lg">{line}</p>
+              ))}
+            </div>
             {buttonLabel && buttonLink && (
               <Button
                 variant="outline"
