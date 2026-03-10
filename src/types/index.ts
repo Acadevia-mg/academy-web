@@ -23,6 +23,7 @@ export type Session =
       startTime: string; // start time for session
       endTime: string; // end time for session
       speakerName: string;
+      eventDate: string; // date of the event for this session  
     }
   | {
       // For sessions in the network room:
@@ -32,6 +33,7 @@ export type Session =
       topic?: string;
       startTime?: string;
       endTime?: string;
+      eventDate: string; // date of the event for this session
     };
 
 export type InitialMetric = {

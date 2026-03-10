@@ -8,7 +8,7 @@ const events: Event[] = [
     heroDescription:
       "Foundations of Web Development Certification Course ile HTML, CSS, JavaScript ve React temellerini proje odaklı bir şekilde öğren. Tamamen ücretsiz, online ve sertifikalı.",
     cardDescription:
-      "📅 Tamamen online, kendi hızında ilerleyebileceğin bir öğrenme deneyimi. 💡 Topluluk desteği, mentor rehberliği ve proje tabanlı öğrenme yaklaşımı seni bekliyor. Kendi web yolculuğunu başlatmaya hazır mısın? 🌟 Şimdi kayıt ol ve geleceğini kodlamaya başla!",
+      "📅 Tamamen online ve kendi hızında ilerleyebileceğin bir öğrenme deneyimi.\n💡 Mentor desteği, topluluk etkileşimi ve proje tabanlı içeriklerle web geliştirme yolculuğuna güçlü bir başlangıç yap.\n🌟 Hemen kayıt ol ve geleceğini kodlamaya başla!",
     location: {
       name: "Online",
       subtext: "Platform: Online • Zaman Dilimi: UTC+3",
@@ -100,6 +100,7 @@ const events: Event[] = [
         startTime: "20.30",
         endTime: "22.30",
         speakerName: "Serkan Alc,",
+        eventDate: "2026-03-09",
       },
       {
         room: "Ana Salon",
@@ -107,6 +108,7 @@ const events: Event[] = [
         startTime: "20.30",
         endTime: "22.30",
         speakerName: "Zeynep Alkoç",
+        eventDate: "2026-03-11",
       },
       {
         room: "Ana Salon",
@@ -114,6 +116,7 @@ const events: Event[] = [
         startTime: "20.30",
         endTime: "22.30",
         speakerName: "Esra Kelleci",
+        eventDate: "2026-03-14",
       },
       {
         room: "Ana Salon",
@@ -121,6 +124,7 @@ const events: Event[] = [
         startTime: "20.30",
         endTime: "22.30",
         speakerName: "Serkan Alc",
+        eventDate: "2026-03-16",  
       },
       {
         room: "Ana Salon",
@@ -128,6 +132,7 @@ const events: Event[] = [
         startTime: "20.30",
         endTime: "22.30",
         speakerName: "Esra Kelleci",
+        eventDate: "2026-03-17",
       },
       {
         room: "Ana Salon",
@@ -135,6 +140,7 @@ const events: Event[] = [
         startTime: "20.00",
         endTime: "22.00",
         speakerName: "Halil İbrahim Çakıroğlu",
+        eventDate: "2026-03-23",  
       },
       {
         room: "Ana Salon",
@@ -142,6 +148,7 @@ const events: Event[] = [
         startTime: "20.00",
         endTime: "22.00",
         speakerName: "İsmail Şimşek",
+        eventDate: "2026-03-25",
       },
       {
         room: "Ana Salon",
@@ -149,6 +156,7 @@ const events: Event[] = [
         startTime: "20.00",
         endTime: "22.00",
         speakerName: "İsmail Şimşek",
+        eventDate: "2026-03-28",
       },
       {
         room: "Ana Salon",
@@ -156,6 +164,7 @@ const events: Event[] = [
         startTime: "20.00",
         endTime: "22.00",
         speakerName: "Zafer Ayan",
+        eventDate: "2026-03-30",
       },
       {
         room: "Ana Salon",
@@ -163,6 +172,7 @@ const events: Event[] = [
         startTime: "20.00",
         endTime: "22.00",
         speakerName: "Zafer Ayan",
+        eventDate: "2026-04-01",
       },
       {
         room: "Ana Salon",
@@ -170,6 +180,7 @@ const events: Event[] = [
         startTime: "20.00",
         endTime: "22.00",
         speakerName: "Zafer Ayan",
+        eventDate: "2026-04-04",
       },
       {
         room: "Ana Salon",
@@ -177,6 +188,7 @@ const events: Event[] = [
         startTime: "20.00",
         endTime: "22.00",
         speakerName: "Melis Dinçol",
+        eventDate: "2026-04-06",
       },
       {
         room: "Ana Salon",
@@ -184,6 +196,7 @@ const events: Event[] = [
         startTime: "20.00",
         endTime: "22.00",
         speakerName: "Hüseyin Gülcü",
+        eventDate: "2026-04-08",  
       },
       {
         room: "Ana Salon",
@@ -191,6 +204,7 @@ const events: Event[] = [
         startTime: "20.00",
         endTime: "22.00",
         speakerName: "Hüseyin Gülcü",
+        eventDate: "2026-04-11",
       },
       {
         room: "Ana Salon",
@@ -198,6 +212,7 @@ const events: Event[] = [
         startTime: "21.00",
         endTime: "23.00",
         speakerName: "Hüseyin Gülcü",
+        eventDate: "2026-04-13",
       },
       {
         room: "Ana Salon",
@@ -205,6 +220,7 @@ const events: Event[] = [
         startTime: "21.00",
         endTime: "23.00",
         speakerName: "Tekin Ağgül",
+        eventDate: "2026-04-15",
       },
       {
         room: "Ana Salon",
@@ -212,6 +228,7 @@ const events: Event[] = [
         startTime: "21.00",
         endTime: "23.00",
         speakerName: "Tekin Ağgül",
+        eventDate: "2026-04-18",  
       },
       {
         room: "Ana Salon",
@@ -219,6 +236,7 @@ const events: Event[] = [
         startTime: "21.00",
         endTime: "23.00",
         speakerName: "Feyza Demirel",
+        eventDate: "2026-04-20",
       },
       {
         room: "Ana Salon",
@@ -226,6 +244,7 @@ const events: Event[] = [
         startTime: "21.00",
         endTime: "23.00",
         speakerName: "Tekin Ağgül",
+        eventDate: "2026-04-22",  
       },
       {
         room: "Ana Salon",
@@ -233,6 +252,7 @@ const events: Event[] = [
         startTime: "21.00",
         endTime: "23.00",
         speakerName: "Furkan Portakal",
+        eventDate: "2026-04-25",
       },
       {
         room: "Ana Salon",
@@ -240,6 +260,7 @@ const events: Event[] = [
         startTime: "21.00",
         endTime: "23.00",
         speakerName: "Furkan Portakal",
+        eventDate: "2026-04-29",
       },
       {
         room: "Ana Salon",
@@ -247,6 +268,7 @@ const events: Event[] = [
         startTime: "21.00",
         endTime: "23.00",
         speakerName: "Furkan Portakal",
+        eventDate: "2026-05-02",
       },
     ],
     sponsors: [
@@ -441,6 +463,7 @@ const events: Event[] = [
         endTime: "13.10",
         speakerName: "Serkan Alc",
         room: "Ana Salon",
+        eventDate: "2025-09-27",
       },
       {
         topic: "Yapay Zeka Çağında Junior Olmak",
@@ -448,6 +471,7 @@ const events: Event[] = [
         endTime: "13.30",
         speakerName: "Murat Yücedağ",
         room: "Ana Salon",
+        eventDate: "2025-09-27",
       },
       {
         topic: "Backend Süreçlerinde Deneyimin İzleri",
@@ -455,6 +479,7 @@ const events: Event[] = [
         endTime: "14.20",
         speakerName: "Mehmet Nuri Yaman",
         room: "Ana Salon",
+        eventDate : "2025-09-27",
       },
       {
         topic: "Siber Tehditlere Karşı Web/Mobil Uygulama Güvenliği",
@@ -462,6 +487,7 @@ const events: Event[] = [
         endTime: "15.00",
         speakerName: "Ümit Samimi",
         room: "Ana Salon",
+        eventDate: "2025-09-27",  
       },
       {
         topic: "Bulutta Güçlü Altyapı: AWS Web Çözümleri",
@@ -469,6 +495,7 @@ const events: Event[] = [
         endTime: "16.00",
         speakerName: "Feyza Demirel",
         room: "Ana Salon",
+        eventDate: "2025-09-27",  
       },
       {
         topic: "Beyond UUIDs: Smarter Identifier Strategies for Modern Systems",
@@ -476,6 +503,7 @@ const events: Event[] = [
         endTime: "16.40",
         speakerName: "Kardel Rüveyda Çetin",
         room: "Ana Salon",
+        eventDate: "2025-09-27",
       },
       {
         topic: "MCP Fundamentals",
@@ -483,6 +511,7 @@ const events: Event[] = [
         endTime: "17.20",
         speakerName: "Fatih Kadir Akın",
         room: "Ana Salon",
+        eventDate: "2025-09-27",
       },
     ],
     sponsors: [
@@ -683,6 +712,7 @@ const events: Event[] = [
         endTime: "13.10",
         speakerName: "Serkan Alc",
         room: "Ana Salon",
+        eventDate: "2025-09-06",  
       },
       {
         topic: "1. Oturum",
@@ -690,6 +720,7 @@ const events: Event[] = [
         endTime: "13.30",
         speakerName: "Ayse Unye",
         room: "Ana Salon",
+        eventDate: "2025-09-06",  
       },
       {
         topic: "2. Oturum",
@@ -697,6 +728,7 @@ const events: Event[] = [
         endTime: "14.20",
         speakerName: "Kardel Rüveyda Çetin",
         room: "Ana Salon",
+        eventDate: "2025-09-06",
       },
       {
         topic: "3. Oturum",
@@ -704,6 +736,7 @@ const events: Event[] = [
         endTime: "14.50",
         speakerName: "Ferhat İşyapan",
         room: "Ana Salon",
+        eventDate: "2025-09-06",  
       },
       {
         topic: "4. Oturum",
@@ -711,6 +744,7 @@ const events: Event[] = [
         endTime: "16.00",
         speakerName: "Halil İbrahim Yıldırım",
         room: "Ana Salon",
+        eventDate: "2025-09-06",
       },
       {
         topic: "5. Oturum",
@@ -718,6 +752,7 @@ const events: Event[] = [
         endTime: "16.30",
         speakerName: "Deniz Alkan",
         room: "Ana Salon",
+        eventDate: "2025-09-06",  
       },
     ],
     sponsors: [
@@ -984,6 +1019,7 @@ const events: Event[] = [
         endTime: "13.10",
         speakerName: "Serkan Alc",
         room: "Ana Salon",
+        eventDate: "2025-06-14",  
       },
       {
         topic: "The Future of Frontend Architecture ",
@@ -991,6 +1027,7 @@ const events: Event[] = [
         endTime: "13.30",
         speakerName: "Oğuzhan Aslan",
         room: "Ana Salon",
+        eventDate : "2025-06-14", 
       },
       {
         topic: "Think. Train. Deploy. Docker’s AI-Powered ModelOps Workflow",
@@ -998,6 +1035,7 @@ const events: Event[] = [
         endTime: "14.20",
         speakerName: " Çiğdem Kadakoğlu",
         room: "Ana Salon",
+        eventDate: "2025-06-14",  
       },
       {
         topic: "Strangler Pattern & Beyond: Modernizing Legacy Architectures ",
@@ -1005,6 +1043,7 @@ const events: Event[] = [
         endTime: "14.50",
         speakerName: "Mercan Karacabey Eke",
         room: "Ana Salon",
+        eventDate: "2025-06-14",  
       },
       {
         topic: "GraphQL - The Future of APIs",
@@ -1012,6 +1051,7 @@ const events: Event[] = [
         endTime: "16.00",
         speakerName: "Vehbi Emiroğlu",
         room: "Ana Salon",
+        eventDate: "2025-06-14",  
       },
       {
         topic: "Angular SSR ",
@@ -1019,6 +1059,7 @@ const events: Event[] = [
         endTime: "16.30",
         speakerName: "Emre Hızlı",
         room: "Ana Salon",
+        eventDate: "2025-06-14",
       },
       // Network
       {
@@ -1027,6 +1068,7 @@ const events: Event[] = [
         endTime: "",
         speakerName: "Furkan Portakal",
         room: "Network",
+        eventDate   : "2025-06-14",
       },
       {
         topic: "",
@@ -1034,6 +1076,7 @@ const events: Event[] = [
         endTime: "",
         speakerName: "Emine Gürcü",
         room: "Network",
+        eventDate: "2025-06-14",  
       },
       // {
       //   topic: "",
@@ -1300,6 +1343,7 @@ const events: Event[] = [
         endTime: "13.10",
         speakerName: "Serkan Alc",
         room: "Ana Salon",
+        eventDate : "2025-05-31", 
       },
       {
         topic: "Geleceğin Yazılımcısı 101",
@@ -1307,6 +1351,7 @@ const events: Event[] = [
         endTime: "13.40",
         speakerName: "Mehmet Nuri Yaman",
         room: "Ana Salon",
+        eventDate: "2025-05-31",
       },
       {
         topic: "Jetpack Compose ve Compose Multiplatform Farkları",
@@ -1314,6 +1359,7 @@ const events: Event[] = [
         endTime: "14.30",
         speakerName: "Kasım Adalan",
         room: "Ana Salon",
+        eventDate   : "2025-05-31",
       },
       {
         topic: "The Journey of Creating Scalable Tech Products",
@@ -1321,6 +1367,7 @@ const events: Event[] = [
         endTime: "15.20",
         speakerName: "Osman Çelik",
         room: "Ana Salon",
+        eventDate: "2025-05-31",
       },
       {
         topic:
@@ -1329,6 +1376,7 @@ const events: Event[] = [
         endTime: "16.00",
         speakerName: "Ece Bahtiyar",
         room: "Ana Salon",
+        eventDate : "2025-05-31",
       },
       {
         topic:
@@ -1337,6 +1385,7 @@ const events: Event[] = [
         endTime: "17.00",
         speakerName: "Oğuz Gürler",
         room: "Ana Salon",
+        eventDate: "2025-05-31",  
       },
       {
         topic:
@@ -1345,6 +1394,7 @@ const events: Event[] = [
         endTime: "17.50",
         speakerName: "Bilal Durnagöl",
         room: "Ana Salon",
+        eventDate: "2025-05-31",
       },
       {
         topic: "Kapanış Konuşması",
@@ -1352,6 +1402,7 @@ const events: Event[] = [
         endTime: "18.00",
         speakerName: "Serkan Alc",
         room: "Ana Salon",
+        eventDate: "2025-05-31",
       },
       // Yan Salon
       {
@@ -1360,6 +1411,7 @@ const events: Event[] = [
         endTime: "14.30",
         speakerName: "Kadriye Macit",
         room: "Yan Salon",
+        eventDate : "2025-05-31",
       },
       {
         topic: "Design Handoffs: Tips Processes and Trends",
@@ -1367,6 +1419,7 @@ const events: Event[] = [
         endTime: "15.20",
         speakerName: "Seyfeddin Başsaraç",
         room: "Yan Salon",
+        eventDate: "2025-05-31",
       },
       {
         topic: "Bir fikir nasıl doğar",
@@ -1374,6 +1427,7 @@ const events: Event[] = [
         endTime: "16.00",
         speakerName: "Furkan Aydemir",
         room: "Yan Salon",
+        eventDate: "2025-05-31",  
       },
       {
         topic: "Korku: En iyi itici güç",
@@ -1381,6 +1435,7 @@ const events: Event[] = [
         endTime: "17.00",
         speakerName: "Emirhan Emmez",
         room: "Yan Salon",
+        eventDate: "2025-05-31",  
       },
       // {
       //   topic: "",
