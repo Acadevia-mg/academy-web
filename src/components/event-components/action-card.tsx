@@ -26,11 +26,11 @@ const ActionCard: React.FC<ActionCardProps> = ({
   const currentYear = new Date().getFullYear();
 
   return (
-    <section className="w-5/6 2xl:w-2/3 mx-auto flex flex-col lg:flex-row items-center justify-between bg-color-primary rounded-3xl px-6 lg:px-12">
+    <section className="w-5/6 2xl:w-2/3 mx-auto flex flex-col lg:flex-row items-center justify-between bg-color-primary rounded-3xl px-6 lg:px-12 py-10 lg:py-0">
       {variant === "right-image" ? (
         <>
           <div className="w-full lg:w-1/2 text-center lg:text-left space-y-4">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 lg:pt-0 pt-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 lg:pt-0">
               {name} Yaklaşıyor!
             </h2>
             <div className="space-y-2">
@@ -50,11 +50,11 @@ const ActionCard: React.FC<ActionCardProps> = ({
               </span>
             </div>
           </div>
-          <div className="w-full lg:w-1/2 mt-8 lg:mt-0 pt-6 lg:pt-12">
+          <div className="w-full lg:w-1/2 mt-8 lg:mt-0 pt-6 lg:pt-12 flex items-end justify-center">
             <img
               src={image}
               alt="Image"
-              className="w-2/3 md:w-1/2 h-auto bottom-0 rounded-md mx-auto"
+              className="w-2/3 md:w-1/2 h-auto rounded-md"
             />
           </div>
         </>

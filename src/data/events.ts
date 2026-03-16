@@ -2,6 +2,190 @@ import { Event } from "@/types";
 
 const events: Event[] = [
   {
+    id: 7,
+    navigable: true,
+    name: "Practical Power BI For Data Analysis Course",
+    heroDescription:
+      "Sıfırdan başlayarak Power BI ile veri analizi dünyasını keşfet; veri görselleştirme, dashboard tasarımı ve veri modellemeyi temelden öğren, gerçek veri setleriyle çalışarak analitik düşünme becerini geliştir.",
+    cardDescription:
+      "💻 %100 online, esnek ve uygulama odaklı öğrenme deneyimi. 🤝 Topluluk desteği, mentor rehberliği ve gerçek proje pratiği. 🎓 Certification Access'e sahip olan katılımcılarımız için, programı başarıyla tamamlayan katılımcılar, paylaşılabilir sertifika almaya hak kazanır. Veri çağında fark yaratmak, raporlayan değil içgörü üreten bir profesyonel olmak için şimdi yerini al.",
+    location: {
+      name: "Online",
+      subtext: "Platform: Online • Zaman Dilimi: UTC+3",
+    },
+    registerLink:
+      "https://togather.lodos.io/events/practical-power-bi-for-data-analysis-certification-course-92408168621499537800",
+    videoUrl: "",
+    date: "2026-04-06T20:00:00+03:00",
+    organizers: [
+      {
+        id: 1,
+        name: "Nuriye Dezcan",
+        designation: "Organizer",
+        image: "/images/organizers/nuriye-dezcan.webp",
+      },
+      {
+        id: 2,
+        name: "Nurhan Uzun",
+        designation: "Organizer",
+        image: "/images/organizers/nurhan-uzun.webp",
+      },
+      {
+        id: 3,
+        name: "Hatice Rana Yamaç",
+        designation: "Organizer ",
+        image: "/images/organizers/rana-yamac.webp",
+      },
+    ],
+    speakers: [
+      {
+        fullName: "Oğuzhan Öz",
+        title: " Business Intelligence Engineer ",
+        company: "lc-waikiki",
+      },
+      {
+        fullName: "Turgay Esen",
+        title: "Senior Data Engineer",
+        company: "abdi-bio",
+      },
+      {
+        fullName: "Hasan Fehmi Barun",
+        title: "IT Manager",
+        company: "ozgun",
+      },
+      {
+        fullName: "Sarp Oğul Çalı",
+        title: "Technical Team Lead",
+        company: "prodigi",
+      },
+      {
+        fullName: "Serkan Alc",
+        title: "Community Lead",
+        company: "multigroup",
+      },
+    ],
+    sessions: [
+      {
+        room: "Ana Salon",
+        topic: "Keynote - Bootcamp Opening",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Serkan Alc",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Session 1 : Power BI'a Giriş & BI Mantığı",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Oğuzhan Öz",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Session 2 : Power Query: Veri Yükleme & Temizleme",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Turgay Esen",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Session 3 : Veri Modelleme (Data Modeling)",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Oğuzhan Öz",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Session 4 : DAX Temelleri",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Turgay Esen",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Session 5 : CALCULATE ve Context Mantığı",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Hasan Fehmi Barun",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Session 6 : Time Intelligence & İleri DAX",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Hasan Fehmi Barun",
+      },
+      {
+        room: "Ana Salon",
+        topic: "Session 7 : Veri Görselleştirme Temelleri",
+        startTime: "20.00",
+        endTime: "22.00",
+        speakerName: "Sarp Oğul Çalı",
+      },
+    ],
+    sponsors: [
+      {
+        tier: "",
+        sponsorSlug: "lc-waikiki",
+      },
+      {
+        tier: "",
+        sponsorSlug: "abdi-bio",
+      },
+      {
+        tier: "",
+        sponsorSlug: "ozgun",
+      },
+      {
+        tier: "",
+        sponsorSlug: "prodigi",
+      },
+    ],
+    tickets: [
+      {
+        type: "Standart Ticket",
+        description:
+          "🎫 Standart Ticket – Öğrenme Deneyimine Tam Erişim\n\nStandart Ticket, bootcamp sürecine eksiksiz şekilde dahil olmanızı ve öğrenme deneyimini kendi temponuzda sürdürmenizi sağlar.",
+        price: 0,
+        link: "https://togather.lodos.io/events/foundations-frontend-web-development-certification-course-99241793086215583681/tickets",
+        perks: [
+          "🎥 Canlı eğitim kayıtlarına tam erişim elde edersiniz. Kaçırdığınız ya da tekrar etmek istediğiniz oturumları dilediğiniz zaman izleyebilirsiniz.",
+          "📄 Eğitmenler tarafından hazırlanan kapsamlı eğitim dökümantasyonlarına erişerek öğrenme sürecinizi derinleştirir, bilgilerinizi kalıcı hâle getirebilirsiniz.",
+          "Standart Ticket, esnek, erişilebilir ve odaklı bir öğrenme deneyimi sunar. Bootcamp'e dahil olun, süreci kendi ritminizde takip edin.",
+        ],
+      },
+      {
+        type: "Certification Access Ticket",
+        description:
+          "🏅 Certification Ticket, program sürecine resmi, ölçümlenebilir ve mentör destekli olarak dahil olmanızı sağlar. Süreci bitirmeniz sonucu sertifika almaya hak kazanacaksınız.",
+        price: 500,
+        link: "https://togather.lodos.io/events/foundations-frontend-web-development-certification-course-99241793086215583681/tickets",
+        perks: [
+          "🍀 Gerçek proje ödevleri üzerinde çalışır, çıktılarınız için detaylı ve nitelikli geri bildirim alırsınız.",
+          "🧠 Süreç boyunca teknik destek ve mentörlük erişimine sahip olursunuz.",
+          "🎓 Program kriterlerini başarıyla tamamlamanız halinde sertifika almaya ve seçili programlarımız için burs olanaklarına hak kazanırsınız.",
+          "Certification Ticket, yalnızca bir katılım bileti değil; değerlendirilen, desteklenen ve belgelendirilen bir öğrenme deneyimidir.",
+        ],
+      },
+    ],
+    images: [
+      "/images/events/mobile-developer-summit-2024/1.webp",
+      "/images/events/mobile-developer-summit-2024/2.webp",
+      "/images/events/mobile-developer-summit-2024/3.webp",
+    ],
+    initialMetrics: [
+      { title: "Ders sayısı", value: 10 },
+      { title: "Eğitmen Sayısı", value: 7 },
+      { title: "Eğitim Süresi (Saat)", value: 30 },
+    ],
+    colorPalette: {
+      text: "250, 6.98%, 16.86%",
+      accent: "199.53, 75.44%, 77.65%",
+      primary: "244.29, 100%, 97.25%",
+      secondary: "250, 6.98%, 16.86%",
+      background: "0, 0%, 100%",
+    },
+  },
+  {
     id: 6,
     navigable: true,
     name: "Foundations of Web Development Certification Course",
