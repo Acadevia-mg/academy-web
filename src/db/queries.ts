@@ -48,6 +48,7 @@ function reconstructEvent(
         topic: s.topic ?? undefined,
         startTime: s.startTime ?? undefined,
         endTime: s.endTime ?? undefined,
+        eventDate: s.eventDate ?? "",
       };
     }
     return {
@@ -56,6 +57,7 @@ function reconstructEvent(
       startTime: s.startTime!,
       endTime: s.endTime!,
       speakerName: s.speakerName,
+      eventDate: s.eventDate ?? "",
     };
   });
 

@@ -330,11 +330,7 @@ export default function EventCard({
             const latestYear = Math.max(
               ...availableYears.map((y) => parseInt(y)),
             );
-            const imagePath = eventImageUrl(
-              `${baseName}-${latestYear}`,
-              "banners",
-              `${baseName}-${latestYear}.webp`,
-            );
+            const imagePath = `${R2_BASE}/${baseName}-${latestYear}/banner.webp`;
             return (
               <div className="w-full h-full flex items-center justify-center">
                 <Image

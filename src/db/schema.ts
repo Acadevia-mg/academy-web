@@ -63,6 +63,7 @@ export const sessions = sqliteTable("sessions", {
   topic: text("topic"),
   startTime: text("start_time"),
   endTime: text("end_time"),
+  eventDate: text("event_date"),
   sortOrder: integer("sort_order").notNull().default(0),
 });
 

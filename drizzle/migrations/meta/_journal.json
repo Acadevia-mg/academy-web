@@ -8,6 +8,13 @@
       "when": 1773747788725,
       "tag": "0000_cloudy_the_executioner",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1773784817748,
+      "tag": "0001_lazy_james_howlett",
+      "breakpoints": true
     }
   ]
 }
