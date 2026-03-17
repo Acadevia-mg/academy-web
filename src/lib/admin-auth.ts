@@ -34,11 +34,10 @@ export async function createAdminSession(): Promise<string> {
   return btoa(`${timestamp}:${bufferToHex(signature)}`);
 }
 
-export async function validateAdminSession(
-  request: Request,
-): Promise<boolean> {
-  const cookie =
-    parseCookies(request.headers.get("cookie") || "")["admin_session"];
+export async function validateAdminSession(request: Request): Promise<boolean> {
+  const cookie = parseCookies(request.headers.get("cookie") || "")[
+    "admin_session"
+  ];
   if (!cookie) return false;
 
   try {

@@ -22,7 +22,7 @@ function reconstructEvent(
   eventTickets: (typeof schema.tickets.$inferSelect)[],
   eventImgs: (typeof schema.eventImages.$inferSelect)[],
   eventMetrics: (typeof schema.initialMetrics.$inferSelect)[],
-  eventAfterMetrics: (typeof schema.afterMetrics.$inferSelect) | undefined,
+  eventAfterMetrics: typeof schema.afterMetrics.$inferSelect | undefined,
 ): Event {
   const speakersArr: Speaker[] = eventSpeakers.map((s) => ({
     fullName: s.fullName,

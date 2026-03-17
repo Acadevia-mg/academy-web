@@ -10,7 +10,9 @@ import type { Event } from "@/types";
 
 export default function NotFound() {
   const router = useRouter();
-  const [latestEventDetails, setLatestEventDetails] = useState<Event | null>(null);
+  const [latestEventDetails, setLatestEventDetails] = useState<Event | null>(
+    null,
+  );
   const [clickCount, setClickCount] = useState(0);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [stars, setStars] = useState<
@@ -111,7 +113,10 @@ export default function NotFound() {
           Bir sonraki etkinliğe kalan süre:
         </p>
 
-        <CountdownTimer center targetDate={latestEventDetails?.date ?? new Date().toISOString()} />
+        <CountdownTimer
+          center
+          targetDate={latestEventDetails?.date ?? new Date().toISOString()}
+        />
       </div>
 
       <Button

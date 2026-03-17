@@ -82,9 +82,7 @@ export function EventForm({ initialData }: EventFormProps) {
   const [cardDescription, setCardDescription] = useState(
     initialData?.cardDescription ?? "",
   );
-  const [navigable, setNavigable] = useState(
-    initialData?.navigable !== false,
-  );
+  const [navigable, setNavigable] = useState(initialData?.navigable !== false);
   const [registerLink, setRegisterLink] = useState(
     initialData?.registerLink ?? "",
   );
@@ -159,9 +157,7 @@ export function EventForm({ initialData }: EventFormProps) {
     })) ?? [],
   );
 
-  const [hasTickets, setHasTickets] = useState(
-    !!initialData?.tickets?.length,
-  );
+  const [hasTickets, setHasTickets] = useState(!!initialData?.tickets?.length);
   const [tickets, setTickets] = useState<TicketForm[]>(
     initialData?.tickets?.map((t) => ({
       type: t.type,
@@ -288,21 +284,13 @@ export function EventForm({ initialData }: EventFormProps) {
     setOrganizers(updated);
   };
 
-  const updateSession = (
-    i: number,
-    field: keyof SessionForm,
-    val: string,
-  ) => {
+  const updateSession = (i: number, field: keyof SessionForm, val: string) => {
     const updated = [...sessions];
     updated[i] = { ...updated[i], [field]: val };
     setSessions(updated);
   };
 
-  const updateSponsor = (
-    i: number,
-    field: keyof SponsorForm,
-    val: string,
-  ) => {
+  const updateSponsor = (i: number, field: keyof SponsorForm, val: string) => {
     const updated = [...sponsors];
     updated[i] = { ...updated[i], [field]: val };
     setSponsors(updated);
@@ -321,7 +309,8 @@ export function EventForm({ initialData }: EventFormProps) {
   const inputClass =
     "w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent";
   const labelClass = "block text-sm font-medium text-gray-700 mb-1";
-  const sectionClass = "bg-white rounded-lg border border-gray-200 p-6 space-y-4";
+  const sectionClass =
+    "bg-white rounded-lg border border-gray-200 p-6 space-y-4";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
@@ -979,9 +968,7 @@ export function EventForm({ initialData }: EventFormProps) {
                 <button
                   type="button"
                   onClick={() =>
-                    setInitialMetrics(
-                      initialMetrics.filter((_, j) => j !== i),
-                    )
+                    setInitialMetrics(initialMetrics.filter((_, j) => j !== i))
                   }
                   className="text-red-500 text-sm pb-2"
                 >
@@ -994,10 +981,7 @@ export function EventForm({ initialData }: EventFormProps) {
             <button
               type="button"
               onClick={() =>
-                setInitialMetrics([
-                  ...initialMetrics,
-                  { title: "", value: 0 },
-                ])
+                setInitialMetrics([...initialMetrics, { title: "", value: 0 }])
               }
               className="text-sm text-gray-600 hover:text-gray-900 px-3 py-1 border border-gray-200 rounded-lg"
             >
@@ -1020,23 +1004,23 @@ export function EventForm({ initialData }: EventFormProps) {
           </div>
           {hasAfterMetrics && (
             <div className="grid grid-cols-2 gap-3">
-              {(
-                Object.keys(afterMetrics) as (keyof AfterMetricsForm)[]
-              ).map((field) => (
-                <div key={field}>
-                  <label className={labelClass}>{field}</label>
-                  <input
-                    className={inputClass}
-                    value={afterMetrics[field]}
-                    onChange={(e) =>
-                      setAfterMetrics({
-                        ...afterMetrics,
-                        [field]: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-              ))}
+              {(Object.keys(afterMetrics) as (keyof AfterMetricsForm)[]).map(
+                (field) => (
+                  <div key={field}>
+                    <label className={labelClass}>{field}</label>
+                    <input
+                      className={inputClass}
+                      value={afterMetrics[field]}
+                      onChange={(e) =>
+                        setAfterMetrics({
+                          ...afterMetrics,
+                          [field]: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                ),
+              )}
             </div>
           )}
         </div>
@@ -1092,11 +1076,7 @@ export function EventForm({ initialData }: EventFormProps) {
           disabled={saving}
           className="bg-gray-900 text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-800 disabled:opacity-50 transition-colors"
         >
-          {saving
-            ? "Kaydediliyor..."
-            : initialData
-              ? "Guncelle"
-              : "Olustur"}
+          {saving ? "Kaydediliyor..." : initialData ? "Guncelle" : "Olustur"}
         </button>
         <button
           type="button"

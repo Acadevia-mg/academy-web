@@ -19,6 +19,7 @@ Hero → Metrics → Speakers → Sessions → Sponsors → Tickets → Gallery 
 ```
 
 Real-world needs that this doesn't cover:
+
 - Some events don't have sessions or tickets (past events, simple meetups)
 - Some events want a video section prominently placed
 - Future events might want testimonials, FAQ, or a countdown timer
@@ -121,28 +122,29 @@ function EventPage({ event }: { event: Event }) {
 ### Admin Panel Integration
 
 Add a "Layout" tab to the Event Form:
+
 - Checklist of sections with visibility toggles
 - Drag-to-reorder list (using `@dnd-kit/core` or native drag)
 - Per-section props exposed as simple inputs where applicable
 
 ### Pros
 
-| Advantage | Detail |
-|-----------|--------|
-| Simple to implement | Single column, JSON parse, map-and-render |
+| Advantage                            | Detail                                               |
+| ------------------------------------ | ---------------------------------------------------- |
+| Simple to implement                  | Single column, JSON parse, map-and-render            |
 | No schema migration for new sections | Just add a new key to the config and a new component |
-| Backward compatible | `null` config renders the current default layout |
-| Easy admin UI | Checkbox list + drag reorder |
-| No new dependencies | Just JSON and existing component library |
+| Backward compatible                  | `null` config renders the current default layout     |
+| Easy admin UI                        | Checkbox list + drag reorder                         |
+| No new dependencies                  | Just JSON and existing component library             |
 
 ### Cons
 
-| Disadvantage | Detail |
-|--------------|--------|
+| Disadvantage                | Detail                                                         |
+| --------------------------- | -------------------------------------------------------------- |
 | Limited customization depth | Can toggle/reorder sections but can't change section internals |
-| No custom HTML/blocks | Admins can't create entirely new section types |
-| JSON validation burden | Must validate config shape at app layer |
-| Props surface area | Adding more `props` per section increases complexity over time |
+| No custom HTML/blocks       | Admins can't create entirely new section types                 |
+| JSON validation burden      | Must validate config shape at app layer                        |
+| Props surface area          | Adding more `props` per section increases complexity over time |
 
 ### Effort: Low (~2-3 days)
 
@@ -159,11 +161,13 @@ Replace the JSON column with a proper `event_sections` table. Each row represent
 ```typescript
 export const eventSections = sqliteTable("event_sections", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
-  type: text("type").notNull(),        // "hero", "speakers", etc.
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
+  type: text("type").notNull(), // "hero", "speakers", etc.
   visible: integer("visible", { mode: "boolean" }).notNull().default(true),
   sortOrder: integer("sort_order").notNull().default(0),
-  config: text("config"),              // JSON for per-section props
+  config: text("config"), // JSON for per-section props
 });
 ```
 
@@ -180,21 +184,21 @@ Same drag-to-reorder UI as Approach 1, but backed by individual row updates inst
 
 ### Pros
 
-| Advantage | Detail |
-|-----------|--------|
-| Standard relational pattern | Fits the existing per-event one-to-many design |
-| Granular updates | Change one section's order without touching others |
-| Queryable | Can find "all events with a video section" via SQL |
-| Familiar CRUD | Same pattern as speakers, sponsors, etc. |
+| Advantage                   | Detail                                             |
+| --------------------------- | -------------------------------------------------- |
+| Standard relational pattern | Fits the existing per-event one-to-many design     |
+| Granular updates            | Change one section's order without touching others |
+| Queryable                   | Can find "all events with a video section" via SQL |
+| Familiar CRUD               | Same pattern as speakers, sponsors, etc.           |
 
 ### Cons
 
-| Disadvantage | Detail |
-|--------------|--------|
-| More queries per page load | Additional join/query for sections |
-| Same limited customization | Still just toggle/reorder built-in section types |
-| More complex admin API | CRUD for sections vs. single JSON PUT |
-| Migration required for new section types | Must seed default rows for existing events |
+| Disadvantage                             | Detail                                           |
+| ---------------------------------------- | ------------------------------------------------ |
+| More queries per page load               | Additional join/query for sections               |
+| Same limited customization               | Still just toggle/reorder built-in section types |
+| More complex admin API                   | CRUD for sections vs. single JSON PUT            |
+| Migration required for new section types | Must seed default rows for existing events       |
 
 ### Effort: Medium (~3-5 days)
 
@@ -211,35 +215,38 @@ Each event page is a list of "blocks" — flexible content units that go beyond 
 ```typescript
 export const eventBlocks = sqliteTable("event_blocks", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
-  blockType: text("block_type").notNull(),  // "speakers", "richText", "imageGrid", "faq", etc.
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
+  blockType: text("block_type").notNull(), // "speakers", "richText", "imageGrid", "faq", etc.
   sortOrder: integer("sort_order").notNull().default(0),
   visible: integer("visible", { mode: "boolean" }).notNull().default(true),
-  data: text("data").notNull(),             // JSON: block-specific content
+  data: text("data").notNull(), // JSON: block-specific content
 });
 ```
 
 ### Block Types
 
-| Block Type | Data Schema | Renders |
-|------------|-------------|---------|
-| `hero` | (uses event data) | Current hero section |
-| `speakers` | `{ columns?: number }` | Current speakers grid |
-| `sessions` | `{}` | Current session tabs |
-| `sponsors` | `{}` | Current sponsors section |
-| `tickets` | `{}` | Current tickets section |
-| `richText` | `{ html: string }` | Rendered markdown/HTML |
-| `imageGrid` | `{ images: string[], columns: 2\|3\|4 }` | Responsive image grid |
-| `ctaButton` | `{ text: string, url: string, style: "primary"\|"outline" }` | Call-to-action button |
-| `faq` | `{ items: { q: string, a: string }[] }` | Accordion FAQ |
-| `countdown` | `{ targetDate: string, label: string }` | Countdown timer |
-| `video` | `{ url: string, autoplay?: boolean }` | Embedded video |
-| `testimonials` | `{ items: { name: string, text: string, image?: string }[] }` | Testimonial carousel |
-| `divider` | `{ style: "line"\|"dots"\|"space" }` | Visual separator |
+| Block Type     | Data Schema                                                   | Renders                  |
+| -------------- | ------------------------------------------------------------- | ------------------------ |
+| `hero`         | (uses event data)                                             | Current hero section     |
+| `speakers`     | `{ columns?: number }`                                        | Current speakers grid    |
+| `sessions`     | `{}`                                                          | Current session tabs     |
+| `sponsors`     | `{}`                                                          | Current sponsors section |
+| `tickets`      | `{}`                                                          | Current tickets section  |
+| `richText`     | `{ html: string }`                                            | Rendered markdown/HTML   |
+| `imageGrid`    | `{ images: string[], columns: 2\|3\|4 }`                      | Responsive image grid    |
+| `ctaButton`    | `{ text: string, url: string, style: "primary"\|"outline" }`  | Call-to-action button    |
+| `faq`          | `{ items: { q: string, a: string }[] }`                       | Accordion FAQ            |
+| `countdown`    | `{ targetDate: string, label: string }`                       | Countdown timer          |
+| `video`        | `{ url: string, autoplay?: boolean }`                         | Embedded video           |
+| `testimonials` | `{ items: { name: string, text: string, image?: string }[] }` | Testimonial carousel     |
+| `divider`      | `{ style: "line"\|"dots"\|"space" }`                          | Visual separator         |
 
 ### Admin UI
 
 A more complex builder interface:
+
 - Block palette sidebar: drag blocks onto the page
 - Each block has an inline editor when selected
 - Rich text block uses a WYSIWYG editor (e.g., Tiptap, which is headless and lightweight)
@@ -247,22 +254,22 @@ A more complex builder interface:
 
 ### Pros
 
-| Advantage | Detail |
-|-----------|--------|
-| Maximum flexibility | Admins can compose arbitrary page layouts |
-| New block types without schema changes | Add a React component + register it |
-| Content blocks | Rich text, FAQ, CTA are useful beyond events |
-| Modern UX | Feels like Notion/WordPress block editor |
+| Advantage                              | Detail                                       |
+| -------------------------------------- | -------------------------------------------- |
+| Maximum flexibility                    | Admins can compose arbitrary page layouts    |
+| New block types without schema changes | Add a React component + register it          |
+| Content blocks                         | Rich text, FAQ, CTA are useful beyond events |
+| Modern UX                              | Feels like Notion/WordPress block editor     |
 
 ### Cons
 
-| Disadvantage | Detail |
-|--------------|--------|
-| Significant UI effort | Block editor is a complex UI component |
-| WYSIWYG complexity | Rich text editing is notoriously hard to get right |
-| Performance | Many blocks = many DB rows + JSON parses per page load |
-| Content sprawl | Without guardrails, pages can become inconsistent |
-| Security | Rich text / HTML blocks need sanitization (XSS risk) |
+| Disadvantage          | Detail                                                 |
+| --------------------- | ------------------------------------------------------ |
+| Significant UI effort | Block editor is a complex UI component                 |
+| WYSIWYG complexity    | Rich text editing is notoriously hard to get right     |
+| Performance           | Many blocks = many DB rows + JSON parses per page load |
+| Content sprawl        | Without guardrails, pages can become inconsistent      |
+| Security              | Rich text / HTML blocks need sanitization (XSS risk)   |
 
 ### Effort: High (~2-3 weeks)
 
@@ -277,42 +284,44 @@ Delegate content management to an external headless CMS (e.g., Sanity, Strapi, C
 ### Architecture Options
 
 **Option A: CMS for layout only**
+
 - D1 stores event data (speakers, sessions, sponsors, etc.)
 - CMS stores page templates and section ordering per event
 - At render time, fetch layout from CMS + data from D1, merge
 
 **Option B: CMS for everything**
+
 - Migrate all event data to CMS
 - D1 becomes unnecessary (or used only for derived/cached data)
 - R2 replaced by CMS media management
 
 ### CMS Candidates
 
-| CMS | Hosting | Pros | Cons |
-|-----|---------|------|------|
-| **Sanity** | Cloud (free tier) | Excellent content modeling, real-time preview, GROQ queries | Vendor lock-in, learning curve |
-| **Payload CMS** | Self-hosted (can run on CF) | Open source, TypeScript-native, custom fields | Must host/maintain yourself |
-| **Strapi** | Self-hosted | Popular, plugin ecosystem, REST + GraphQL | Heavy, needs Node server (not CF Workers) |
-| **Contentful** | Cloud | CDN-backed, established | Expensive at scale, rigid content model |
+| CMS             | Hosting                     | Pros                                                        | Cons                                      |
+| --------------- | --------------------------- | ----------------------------------------------------------- | ----------------------------------------- |
+| **Sanity**      | Cloud (free tier)           | Excellent content modeling, real-time preview, GROQ queries | Vendor lock-in, learning curve            |
+| **Payload CMS** | Self-hosted (can run on CF) | Open source, TypeScript-native, custom fields               | Must host/maintain yourself               |
+| **Strapi**      | Self-hosted                 | Popular, plugin ecosystem, REST + GraphQL                   | Heavy, needs Node server (not CF Workers) |
+| **Contentful**  | Cloud                       | CDN-backed, established                                     | Expensive at scale, rigid content model   |
 
 ### Pros
 
-| Advantage | Detail |
-|-----------|--------|
+| Advantage                        | Detail                                                     |
+| -------------------------------- | ---------------------------------------------------------- |
 | Battle-tested content management | CMSes solve page building, media, versioning, localization |
-| Rich editing UX | Visual editors, preview, collaboration out of the box |
-| No admin panel to maintain | The CMS *is* the admin panel |
-| Content versioning / drafts | Built into most CMSes |
+| Rich editing UX                  | Visual editors, preview, collaboration out of the box      |
+| No admin panel to maintain       | The CMS _is_ the admin panel                               |
+| Content versioning / drafts      | Built into most CMSes                                      |
 
 ### Cons
 
-| Disadvantage | Detail |
-|--------------|--------|
-| External dependency | Adds a third-party service to the stack |
-| Cost | Most cloud CMSes charge per seat or API call at scale |
-| Complexity | Two data sources (CMS + D1) or full migration effort |
-| Vendor lock-in | Content model tied to specific CMS |
-| Latency | API calls to external CMS add latency vs. local D1 |
+| Disadvantage           | Detail                                                         |
+| ---------------------- | -------------------------------------------------------------- |
+| External dependency    | Adds a third-party service to the stack                        |
+| Cost                   | Most cloud CMSes charge per seat or API call at scale          |
+| Complexity             | Two data sources (CMS + D1) or full migration effort           |
+| Vendor lock-in         | Content model tied to specific CMS                             |
+| Latency                | API calls to external CMS add latency vs. local D1             |
 | Defeats Phase 1-2 work | If going full CMS, the D1 + R2 + admin panel becomes redundant |
 
 ### Effort: High (~2-4 weeks for integration, longer for full migration)
@@ -350,13 +359,13 @@ function EventPage({ event }: { event: Event }) {
 
 ### Template Variants
 
-| Template | Sections | Use Case |
-|----------|----------|----------|
-| `default` | All sections, current layout | Standard events |
-| `conference` | Hero → Speakers → Sessions → Sponsors → Tickets → Metrics | Multi-day conferences |
-| `bootcamp` | Hero → Metrics → Curriculum (custom) → Tickets → FAQ | Course-style events |
-| `meetup` | Hero → Speakers → Location → Sponsors | Simple meetups, no tickets/sessions |
-| `past` | Hero → AfterMetrics → Gallery → Speakers (read-only) | Archived past events |
+| Template     | Sections                                                  | Use Case                            |
+| ------------ | --------------------------------------------------------- | ----------------------------------- |
+| `default`    | All sections, current layout                              | Standard events                     |
+| `conference` | Hero → Speakers → Sessions → Sponsors → Tickets → Metrics | Multi-day conferences               |
+| `bootcamp`   | Hero → Metrics → Curriculum (custom) → Tickets → FAQ      | Course-style events                 |
+| `meetup`     | Hero → Speakers → Location → Sponsors                     | Simple meetups, no tickets/sessions |
+| `past`       | Hero → AfterMetrics → Gallery → Speakers (read-only)      | Archived past events                |
 
 ### Admin Panel Integration
 
@@ -364,22 +373,22 @@ A dropdown selector on the Event Form: "Template" → picks from registered temp
 
 ### Pros
 
-| Advantage | Detail |
-|-----------|--------|
-| Full control | Each template is a React component — any layout possible |
-| Type-safe | Templates are TypeScript, caught at build time |
-| Fast | No JSON parsing or dynamic resolution at runtime |
-| Simple mental model | "Which template does this event use?" — one field |
-| Easy to test | Each template is a standalone component |
+| Advantage           | Detail                                                   |
+| ------------------- | -------------------------------------------------------- |
+| Full control        | Each template is a React component — any layout possible |
+| Type-safe           | Templates are TypeScript, caught at build time           |
+| Fast                | No JSON parsing or dynamic resolution at runtime         |
+| Simple mental model | "Which template does this event use?" — one field        |
+| Easy to test        | Each template is a standalone component                  |
 
 ### Cons
 
-| Disadvantage | Detail |
-|--------------|--------|
-| Requires code deploy | New templates or changes need a git push + deploy |
-| Not admin-manageable | Non-developers can't create new templates |
-| Template proliferation | Risk of one-off templates per event |
-| Coupling | Templates must know about the Event type structure |
+| Disadvantage           | Detail                                             |
+| ---------------------- | -------------------------------------------------- |
+| Requires code deploy   | New templates or changes need a git push + deploy  |
+| Not admin-manageable   | Non-developers can't create new templates          |
+| Template proliferation | Risk of one-off templates per event                |
+| Coupling               | Templates must know about the Event type structure |
 
 ### Effort: Low (~1-2 days for the framework, ongoing per template)
 
@@ -387,17 +396,17 @@ A dropdown selector on the Event Form: "Template" → picks from registered temp
 
 ## Comparison Matrix
 
-| Criteria | JSON Config | Relational Sections | Block Editor | Headless CMS | Static Templates |
-|----------|:-----------:|:-------------------:|:------------:|:------------:|:----------------:|
-| **Implementation effort** | Low | Medium | High | High | Low |
-| **Admin flexibility** | Medium | Medium | High | Very High | Low |
-| **Section reordering** | Yes | Yes | Yes | Yes | No (per template) |
-| **Custom content blocks** | No | No | Yes | Yes | Code only |
-| **Non-dev friendly** | Yes | Yes | Yes | Yes | No |
-| **Performance impact** | Minimal | Minimal | Moderate | Moderate | None |
-| **Maintenance burden** | Low | Low | High | Medium | Low |
-| **Consistency** | High | High | Medium | Medium | High |
-| **Works with Phase 1-2** | Seamlessly | Seamlessly | Extends | Replaces | Seamlessly |
+| Criteria                  | JSON Config | Relational Sections | Block Editor | Headless CMS | Static Templates  |
+| ------------------------- | :---------: | :-----------------: | :----------: | :----------: | :---------------: |
+| **Implementation effort** |     Low     |       Medium        |     High     |     High     |        Low        |
+| **Admin flexibility**     |   Medium    |       Medium        |     High     |  Very High   |        Low        |
+| **Section reordering**    |     Yes     |         Yes         |     Yes      |     Yes      | No (per template) |
+| **Custom content blocks** |     No      |         No          |     Yes      |     Yes      |     Code only     |
+| **Non-dev friendly**      |     Yes     |         Yes         |     Yes      |     Yes      |        No         |
+| **Performance impact**    |   Minimal   |       Minimal       |   Moderate   |   Moderate   |       None        |
+| **Maintenance burden**    |     Low     |         Low         |     High     |    Medium    |        Low        |
+| **Consistency**           |    High     |        High         |    Medium    |    Medium    |       High        |
+| **Works with Phase 1-2**  | Seamlessly  |     Seamlessly      |   Extends    |   Replaces   |    Seamlessly     |
 
 ---
 

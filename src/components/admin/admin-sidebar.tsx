@@ -14,7 +14,11 @@ export function AdminSidebar() {
 
   const navItems = [
     { href: "/admin/dashboard", label: "Etkinlikler", icon: "list" },
-    { href: "/admin/dashboard/announcement", label: "Duyuru", icon: "megaphone" },
+    {
+      href: "/admin/dashboard/announcement",
+      label: "Duyuru",
+      icon: "megaphone",
+    },
   ];
 
   return (

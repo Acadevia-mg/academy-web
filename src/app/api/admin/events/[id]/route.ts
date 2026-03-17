@@ -74,9 +74,15 @@ export async function PUT(
     db.delete(schema.sessions).where(eq(schema.sessions.eventId, eventId)),
     db.delete(schema.sponsors).where(eq(schema.sponsors.eventId, eventId)),
     db.delete(schema.tickets).where(eq(schema.tickets.eventId, eventId)),
-    db.delete(schema.eventImages).where(eq(schema.eventImages.eventId, eventId)),
-    db.delete(schema.initialMetrics).where(eq(schema.initialMetrics.eventId, eventId)),
-    db.delete(schema.afterMetrics).where(eq(schema.afterMetrics.eventId, eventId)),
+    db
+      .delete(schema.eventImages)
+      .where(eq(schema.eventImages.eventId, eventId)),
+    db
+      .delete(schema.initialMetrics)
+      .where(eq(schema.initialMetrics.eventId, eventId)),
+    db
+      .delete(schema.afterMetrics)
+      .where(eq(schema.afterMetrics.eventId, eventId)),
   ]);
 
   // Re-insert child rows (same logic as POST)

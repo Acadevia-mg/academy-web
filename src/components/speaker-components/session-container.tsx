@@ -291,7 +291,6 @@ export default function SessionContainer({
                   Seçilen Oturumlar ({selectedSessions.length})
                 </h3>
                 <Button
-
                   onClick={() => handleCalendarDownload(selectedSessions)}
                   style={{
                     backgroundColor: primaryColor,
@@ -361,7 +360,11 @@ export default function SessionContainer({
               >
                 <div className="relative">
                   <Image
-                    src={eventImageUrl(eventSlug, "speakers", `${slugify(session.speakerName)}.webp`)}
+                    src={eventImageUrl(
+                      eventSlug,
+                      "speakers",
+                      `${slugify(session.speakerName)}.webp`,
+                    )}
                     alt={session.speakerName}
                     width={128}
                     height={128}
@@ -418,7 +421,11 @@ export default function SessionContainer({
                     {/* Image spanning 2 rows */}
                     <div className="relative w-16 aspect-square rounded-full overflow-hidden border-4 border-white shadow-md shrink-0 row-span-2">
                       <Image
-                        src={eventImageUrl(eventSlug, "speakers", `${slugify(session.speakerName)}.webp`)}
+                        src={eventImageUrl(
+                          eventSlug,
+                          "speakers",
+                          `${slugify(session.speakerName)}.webp`,
+                        )}
                         alt={session.speakerName}
                         fill
                         className="object-cover"
@@ -475,7 +482,11 @@ export default function SessionContainer({
                   <div className="flex items-center gap-4 flex-1 min-w-0">
                     <div className="relative w-[60px] aspect-square rounded-full overflow-hidden border-4 border-white shadow-md shrink-0">
                       <Image
-                        src={eventImageUrl(eventSlug, "speakers", `${slugify(session.speakerName)}.webp`)}
+                        src={eventImageUrl(
+                          eventSlug,
+                          "speakers",
+                          `${slugify(session.speakerName)}.webp`,
+                        )}
                         alt={session.speakerName}
                         fill
                         className="object-cover"

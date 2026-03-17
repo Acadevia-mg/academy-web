@@ -186,7 +186,11 @@ export default function EventCard({
                     ...availableYears.map((y) => parseInt(y)),
                   ).toString();
                 // Get the event for this year
-                const eventForYear = getEventByBaseNameAndYear(allEvents, baseName, year);
+                const eventForYear = getEventByBaseNameAndYear(
+                  allEvents,
+                  baseName,
+                  year,
+                );
                 // Fallback to current event if not found (shouldn't happen)
                 const eventData = eventForYear || event;
                 const eventDate = new Date(eventData.date);
@@ -326,7 +330,11 @@ export default function EventCard({
             const latestYear = Math.max(
               ...availableYears.map((y) => parseInt(y)),
             );
-            const imagePath = eventImageUrl(`${baseName}-${latestYear}`, "banners", `${baseName}-${latestYear}.webp`);
+            const imagePath = eventImageUrl(
+              `${baseName}-${latestYear}`,
+              "banners",
+              `${baseName}-${latestYear}.webp`,
+            );
             return (
               <div className="w-full h-full flex items-center justify-center">
                 <Image

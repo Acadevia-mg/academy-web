@@ -189,9 +189,7 @@ export default function AnnouncementPage() {
               <input
                 type="text"
                 value={data.linkText}
-                onChange={(e) =>
-                  setData({ ...data, linkText: e.target.value })
-                }
+                onChange={(e) => setData({ ...data, linkText: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
               />
             </div>
@@ -206,9 +204,7 @@ export default function AnnouncementPage() {
           >
             {saving ? "Kaydediliyor..." : "Kaydet"}
           </button>
-          {saved && (
-            <span className="text-sm text-green-600">Kaydedildi!</span>
-          )}
+          {saved && <span className="text-sm text-green-600">Kaydedildi!</span>}
         </div>
       </div>
     </div>

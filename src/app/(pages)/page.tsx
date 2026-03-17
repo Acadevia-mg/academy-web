@@ -27,7 +27,8 @@ export default function HeroPage() {
   );
 
   const secondLatest = useMemo(
-    () => (events && events.length >= 2 ? getSecondLatestEvent(events) : undefined),
+    () =>
+      events && events.length >= 2 ? getSecondLatestEvent(events) : undefined,
     [events],
   );
 

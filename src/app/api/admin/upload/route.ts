@@ -21,10 +21,7 @@ export async function POST(request: Request) {
 
   // Validate path format
   if (!/^[\w-]+\/[\w-]+\/[\w.-]+$/.test(path)) {
-    return NextResponse.json(
-      { error: "Invalid path format" },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: "Invalid path format" }, { status: 400 });
   }
 
   // Validate file size (max 5MB)

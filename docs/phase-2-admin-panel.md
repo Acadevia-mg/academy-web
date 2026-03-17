@@ -47,12 +47,21 @@ src/app/
 **Critical change:** Move public chrome from root `layout.tsx` to `(pages)/layout.tsx` so `/admin` routes don't inherit Navbar, Footer, or EventColorProvider.
 
 **`src/app/layout.tsx`** (simplified):
+
 ```tsx
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <head>
-        <Script defer src="https://cloud.umami.is/script.js" data-website-id={process.env.UMAMI_PROJECT_ID} />
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id={process.env.UMAMI_PROJECT_ID}
+        />
       </head>
       <body className={`${montserrat.variable} bg-color-background`}>
         {children}
@@ -64,8 +73,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ```
 
 **`src/app/(pages)/layout.tsx`** (new, receives public chrome):
+
 ```tsx
-export default function PagesLayout({ children }: { children: React.ReactNode }) {
+export default function PagesLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const latestEventLink = getLatestEventLink();
   return (
     <EventColorProvider>
@@ -112,7 +126,9 @@ All `/api/admin/*` routes call `validateAdminSession(request)`:
 ```typescript
 // src/lib/admin-auth.ts
 export async function validateAdminSession(request: Request): Promise<boolean> {
-  const cookie = parseCookies(request.headers.get("cookie") || "")["admin_session"];
+  const cookie = parseCookies(request.headers.get("cookie") || "")[
+    "admin_session"
+  ];
   if (!cookie) return false;
 
   const [timestamp, signature] = atob(cookie).split(":");
@@ -120,10 +136,17 @@ export async function validateAdminSession(request: Request): Promise<boolean> {
   if (age > 24 * 60 * 60 * 1000) return false; // expired
 
   const key = await crypto.subtle.importKey(
-    "raw", new TextEncoder().encode(process.env.ADMIN_SECRET_KEY),
-    { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+    "raw",
+    new TextEncoder().encode(process.env.ADMIN_SECRET_KEY),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
   );
-  const expected = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(timestamp));
+  const expected = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    new TextEncoder().encode(timestamp),
+  );
   return signature === bufferToHex(expected);
 }
 ```
@@ -197,6 +220,7 @@ Auth: Required
 ```
 
 **Logic:**
+
 1. Validate payload
 2. Insert into `events` table
 3. Batch insert into child tables (`speakers`, `organizers`, etc.) with the new `eventId`
@@ -211,6 +235,7 @@ Auth: Required
 ```
 
 **Logic:**
+
 1. Update `events` row
 2. Delete all existing child rows for this event
 3. Re-insert child rows from the payload
@@ -243,12 +268,14 @@ Auth: Required
 ```
 
 **Logic:**
+
 1. Validate admin session
 2. Read file from FormData
 3. Put to R2: `env.ASSETS_BUCKET.put(path, file)`
 4. Return public URL
 
 **R2 binding needed in `wrangler.toml`:**
+
 ```toml
 [[r2_buckets]]
 binding = "ASSETS_BUCKET"
@@ -298,8 +325,19 @@ type EventFormData = {
   registerLink: string;
   videoUrl: string;
   date: string;
-  location: { name: string; subtext: string; latitude: string; longitude: string };
-  colorPalette: { primary: string; secondary: string; accent: string; background: string; text: string };
+  location: {
+    name: string;
+    subtext: string;
+    latitude: string;
+    longitude: string;
+  };
+  colorPalette: {
+    primary: string;
+    secondary: string;
+    accent: string;
+    background: string;
+    text: string;
+  };
   speakers: SpeakerFormData[];
   organizers: OrganizerFormData[];
   sessions: SessionFormData[];
@@ -315,38 +353,38 @@ type EventFormData = {
 
 #### 5a. Basic Info Section
 
-| Field | Input Type | Required | Notes |
-|-------|-----------|----------|-------|
-| `name` | Text input | Yes | Event name (e.g., "Web Developer Conference 2025") |
-| `heroDescription` | Textarea | Yes | Hero section subtitle |
-| `cardDescription` | Textarea | Yes | Card description for event listing |
-| `navigable` | Checkbox (Shadcn) | No | Default: true. If false, event returns 404 on direct access |
-| `registerLink` | URL input | Yes | Registration/ticket URL |
-| `videoUrl` | URL input | No | Video embed URL |
-| `date` | `<input type="datetime-local">` | Yes | Event date and time |
+| Field             | Input Type                      | Required | Notes                                                       |
+| ----------------- | ------------------------------- | -------- | ----------------------------------------------------------- |
+| `name`            | Text input                      | Yes      | Event name (e.g., "Web Developer Conference 2025")          |
+| `heroDescription` | Textarea                        | Yes      | Hero section subtitle                                       |
+| `cardDescription` | Textarea                        | Yes      | Card description for event listing                          |
+| `navigable`       | Checkbox (Shadcn)               | No       | Default: true. If false, event returns 404 on direct access |
+| `registerLink`    | URL input                       | Yes      | Registration/ticket URL                                     |
+| `videoUrl`        | URL input                       | No       | Video embed URL                                             |
+| `date`            | `<input type="datetime-local">` | Yes      | Event date and time                                         |
 
 #### 5b. Location Section
 
-| Field | Input Type | Required | Notes |
-|-------|-----------|----------|-------|
-| `location.name` | Text input | Yes | e.g., "Kadir Has Üniversitesi" |
-| `location.subtext` | Text input | Yes | e.g., "Cibali Kampüsü Etkinlik Alanı" |
-| `location.latitude` | Number input | No | For map display |
-| `location.longitude` | Number input | No | For map display |
+| Field                | Input Type   | Required | Notes                                 |
+| -------------------- | ------------ | -------- | ------------------------------------- |
+| `location.name`      | Text input   | Yes      | e.g., "Kadir Has Üniversitesi"        |
+| `location.subtext`   | Text input   | Yes      | e.g., "Cibali Kampüsü Etkinlik Alanı" |
+| `location.latitude`  | Number input | No       | For map display                       |
+| `location.longitude` | Number input | No       | For map display                       |
 
 #### 5c. Speakers Section (Dynamic Array)
 
 Each speaker row:
 
-| Field | Input Type | Required | Notes |
-|-------|-----------|----------|-------|
-| `fullName` | Text input | Yes | Determines image filename via `slugify()` |
-| `title` | Text input | Yes | Job title |
-| `company` | Text input | No | Company slug (matches sponsor logos) |
-| `instagram` | Text input | No | Instagram URL |
-| `linkedin` | Text input | No | LinkedIn URL |
-| `twitter` | Text input | No | Twitter/X URL |
-| Image | Upload button | No | Opens `ImageCropDialog` with **1:1 aspect ratio** |
+| Field       | Input Type    | Required | Notes                                             |
+| ----------- | ------------- | -------- | ------------------------------------------------- |
+| `fullName`  | Text input    | Yes      | Determines image filename via `slugify()`         |
+| `title`     | Text input    | Yes      | Job title                                         |
+| `company`   | Text input    | No       | Company slug (matches sponsor logos)              |
+| `instagram` | Text input    | No       | Instagram URL                                     |
+| `linkedin`  | Text input    | No       | LinkedIn URL                                      |
+| `twitter`   | Text input    | No       | Twitter/X URL                                     |
+| Image       | Upload button | No       | Opens `ImageCropDialog` with **1:1 aspect ratio** |
 
 - "Add Speaker" button appends empty row
 - Remove (X) button on each row
@@ -357,13 +395,13 @@ Each speaker row:
 
 Each session row:
 
-| Field | Input Type | Required | Notes |
-|-------|-----------|----------|-------|
-| `room` | Text input or select | Yes | Known values: "Ana Salon", "Yan Salon", "Network" |
-| `topic` | Text input | Conditional | Required unless room = "Network" |
-| `speakerName` | Text input / dropdown | Yes | Ideally populated from speakers already added |
-| `startTime` | Text input | Conditional | Format: "13.00". Required unless room = "Network" |
-| `endTime` | Text input | Conditional | Format: "14.00". Required unless room = "Network" |
+| Field         | Input Type            | Required    | Notes                                             |
+| ------------- | --------------------- | ----------- | ------------------------------------------------- |
+| `room`        | Text input or select  | Yes         | Known values: "Ana Salon", "Yan Salon", "Network" |
+| `topic`       | Text input            | Conditional | Required unless room = "Network"                  |
+| `speakerName` | Text input / dropdown | Yes         | Ideally populated from speakers already added     |
+| `startTime`   | Text input            | Conditional | Format: "13.00". Required unless room = "Network" |
+| `endTime`     | Text input            | Conditional | Format: "14.00". Required unless room = "Network" |
 
 - When room = "Network", topic/startTime/endTime fields become optional and grayed out
 - "Add Session" button appends empty row
@@ -373,11 +411,11 @@ Each session row:
 
 Each sponsor row:
 
-| Field | Input Type | Required | Notes |
-|-------|-----------|----------|-------|
-| `sponsorSlug` | Text input | Yes | Auto-slugified (lowercase, hyphens). e.g., "aws", "microsoft" |
-| `tier` | Select dropdown | Yes | Options: "", "platin", "altın", "gümüş", "bronz" |
-| Image | Upload button | No | Opens `ImageCropDialog` with **2.5:1 aspect ratio** |
+| Field         | Input Type      | Required | Notes                                                         |
+| ------------- | --------------- | -------- | ------------------------------------------------------------- |
+| `sponsorSlug` | Text input      | Yes      | Auto-slugified (lowercase, hyphens). e.g., "aws", "microsoft" |
+| `tier`        | Select dropdown | Yes      | Options: "", "platin", "altın", "gümüş", "bronz"              |
+| Image         | Upload button   | No       | Opens `ImageCropDialog` with **2.5:1 aspect ratio**           |
 
 - Image preview thumbnail after upload
 - "Add Sponsor" button appends empty row
@@ -388,15 +426,16 @@ Toggle to enable/disable the entire tickets section.
 
 Each ticket row:
 
-| Field | Input Type | Required | Notes |
-|-------|-----------|----------|-------|
-| `type` | Text input | Yes | e.g., "Community Supporter Ticket" |
-| `description` | Textarea | Yes | Ticket description (supports emoji) |
-| `price` | Number input | Yes | Price in TRY (0 for free) |
-| `link` | URL input | Yes | Purchase URL |
-| `perks` | Dynamic string array | Yes | Sub-array of text inputs |
+| Field         | Input Type           | Required | Notes                               |
+| ------------- | -------------------- | -------- | ----------------------------------- |
+| `type`        | Text input           | Yes      | e.g., "Community Supporter Ticket"  |
+| `description` | Textarea             | Yes      | Ticket description (supports emoji) |
+| `price`       | Number input         | Yes      | Price in TRY (0 for free)           |
+| `link`        | URL input            | Yes      | Purchase URL                        |
+| `perks`       | Dynamic string array | Yes      | Sub-array of text inputs            |
 
 Perks sub-array:
+
 - "Add Perk" button appends a text input
 - Remove (X) button on each perk
 
@@ -404,10 +443,10 @@ Perks sub-array:
 
 **Initial Metrics** (1-3 items):
 
-| Field | Input Type | Required |
-|-------|-----------|----------|
-| `title` | Text input | Yes |
-| `value` | Number input | Yes |
+| Field   | Input Type   | Required |
+| ------- | ------------ | -------- |
+| `title` | Text input   | Yes      |
+| `value` | Number input | Yes      |
 
 - Shows 1 metric by default
 - "Add Metric" button (max 3, disabled at 3)
@@ -415,22 +454,23 @@ Perks sub-array:
 
 **After Metrics** (optional, toggle to enable):
 
-| Field | Input Type | Notes |
-|-------|-----------|-------|
-| `applications` | Text input | e.g., "700" |
-| `vipGuests` | Text input | e.g., "200+" |
-| `supporter` | Text input | e.g., "250+" |
-| `speakers` | Text input | e.g., "40" |
-| `workingParticipant` | Text input | e.g., "70%" |
-| `jobSeeker` | Text input | e.g., "45%" |
-| `jobProvider` | Text input | e.g., "75%" |
-| `satisfaction` | Text input | e.g., "90%" |
+| Field                | Input Type | Notes        |
+| -------------------- | ---------- | ------------ |
+| `applications`       | Text input | e.g., "700"  |
+| `vipGuests`          | Text input | e.g., "200+" |
+| `supporter`          | Text input | e.g., "250+" |
+| `speakers`           | Text input | e.g., "40"   |
+| `workingParticipant` | Text input | e.g., "70%"  |
+| `jobSeeker`          | Text input | e.g., "45%"  |
+| `jobProvider`        | Text input | e.g., "75%"  |
+| `satisfaction`       | Text input | e.g., "90%"  |
 
 #### 5h. Colors Section
 
 5 HSL color fields: primary, secondary, accent, background, text
 
 Each color:
+
 - Text input showing HSL string (e.g., `"244.29, 100%, 97.25%"`)
 - Color preview swatch (rendered with `background: hsl(${value})`)
 - Three range sliders: H (0-360), S (0-100%), L (0-100%)
@@ -453,6 +493,7 @@ Alternative: native `<input type="color">` with hex-to-HSL conversion (simpler, 
 ### Library: `react-image-crop`
 
 Chosen for:
+
 - Lightweight (~8KB, no dependencies)
 - Pure canvas-based (works in all browsers)
 - Easy aspect ratio locking
@@ -494,16 +535,17 @@ type ImageCropDialogProps = {
   open: boolean;
   onClose: () => void;
   onCropped: (url: string) => void;
-  aspectRatio: number;        // 1 for speakers, 2.5 for sponsors
-  outputWidth: number;        // 400 for speakers, 500 for sponsors
-  outputHeight: number;       // 400 for speakers, 200 for sponsors
-  uploadPath: string;         // R2 path like "event-slug/speakers/name.webp"
+  aspectRatio: number; // 1 for speakers, 2.5 for sponsors
+  outputWidth: number; // 400 for speakers, 500 for sponsors
+  outputHeight: number; // 400 for speakers, 200 for sponsors
+  uploadPath: string; // R2 path like "event-slug/speakers/name.webp"
 };
 ```
 
 ### Client-Side Processing (No Server-Side Image Manipulation)
 
 All image processing happens in the browser:
+
 - Cloudflare Workers cannot run Sharp or other native image libraries
 - `canvas.toBlob('image/webp')` has universal browser support
 - The uploaded blob is already the final format — no server-side transformation needed
@@ -572,15 +614,15 @@ All image processing happens in the browser:
 
 Simple form with all announcement fields:
 
-| Field | Input Type |
-|-------|-----------|
-| `show` | Toggle switch |
-| `text` | Textarea |
+| Field             | Input Type               |
+| ----------------- | ------------------------ |
+| `show`            | Toggle switch            |
+| `text`            | Textarea                 |
 | `backgroundColor` | Color input + text (hex) |
-| `textColor` | Color input + text (hex) |
-| `link` | URL input |
-| `linkText` | Text input |
-| `showLink` | Toggle switch |
+| `textColor`       | Color input + text (hex) |
+| `link`            | URL input                |
+| `linkText`        | Text input               |
+| `showLink`        | Toggle switch            |
 
 - Live preview banner at top of form
 - Save button: PUT to `/api/admin/announcement`
@@ -594,7 +636,11 @@ Simple form with all announcement fields:
 Minimal — just HTML structure, no public site chrome:
 
 ```tsx
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <div className="min-h-screen bg-gray-50">{children}</div>;
 }
 ```
@@ -604,7 +650,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 Wraps all authenticated pages with sidebar + auth guard:
 
 ```tsx
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <AuthGuard>
       <div className="flex min-h-screen">
@@ -644,6 +694,7 @@ npm install react-image-crop
 ```
 
 That's the only new dependency for Phase 2. Everything else uses:
+
 - Existing Shadcn/ui components (Dialog, Button, Input, Checkbox, Tabs, Card, Badge, Toast)
 - Native HTML inputs (`datetime-local`, `number`, `color`)
 - Existing Tailwind CSS classes
@@ -670,14 +721,14 @@ ADMIN_SECRET_KEY=your-local-dev-secret-key
 
 ## 11. Security Considerations
 
-| Concern | Mitigation |
-|---------|------------|
-| No public link to admin | `/admin` route exists but is never linked from any public page |
-| Secret key exposure | Stored as CF Workers secret, never in client bundle |
-| XSS on admin panel | HttpOnly cookies prevent token theft; all inputs sanitized |
-| CSRF | SameSite=Strict cookie; validate origin header on mutations |
-| Image upload abuse | Check file size (max 5MB), validate content type (image/*) |
-| R2 path traversal | Validate upload path format server-side (must match `{slug}/{category}/{filename}.webp`) |
+| Concern                 | Mitigation                                                                               |
+| ----------------------- | ---------------------------------------------------------------------------------------- |
+| No public link to admin | `/admin` route exists but is never linked from any public page                           |
+| Secret key exposure     | Stored as CF Workers secret, never in client bundle                                      |
+| XSS on admin panel      | HttpOnly cookies prevent token theft; all inputs sanitized                               |
+| CSRF                    | SameSite=Strict cookie; validate origin header on mutations                              |
+| Image upload abuse      | Check file size (max 5MB), validate content type (image/\*)                              |
+| R2 path traversal       | Validate upload path format server-side (must match `{slug}/{category}/{filename}.webp`) |
 
 ---
 
@@ -696,23 +747,27 @@ bucket_name = "academy-assets"
 ## 13. Implementation Sequence
 
 ### Layout Refactoring
+
 1. Move Navbar/Footer/EventColorProvider from root `layout.tsx` to `(pages)/layout.tsx`
 2. Simplify root `layout.tsx` to bare html/body/font
 3. Verify public site still works identically
 
 ### Auth
+
 4. Create `src/lib/admin-auth.ts` (HMAC cookie helpers)
 5. Create `POST /api/admin/auth` route (login)
 6. Create `GET /api/admin/auth` route (session check)
 7. Create `src/components/admin/auth-guard.tsx`
 
 ### Admin Layout & Navigation
+
 8. Create `src/app/admin/layout.tsx`
 9. Create `src/app/admin/page.tsx` (login page)
 10. Create `src/components/admin/admin-sidebar.tsx`
 11. Create `src/app/admin/dashboard/layout.tsx`
 
 ### API Routes
+
 12. Create `POST /api/admin/events` (create)
 13. Create `GET /api/admin/events` (list)
 14. Create `GET/PUT/DELETE /api/admin/events/[id]`
@@ -720,17 +775,20 @@ bucket_name = "academy-assets"
 16. Create `POST /api/admin/upload` (R2 image upload)
 
 ### Form Components
+
 17. Create `src/components/admin/image-crop-dialog.tsx`
 18. Create form sections (basic-info, location, speakers, sessions, sponsors, tickets, metrics, colors, images)
 19. Assemble `src/components/admin/event-form.tsx`
 
 ### Pages
+
 20. Create `src/app/admin/dashboard/page.tsx` (event list)
 21. Create `src/app/admin/dashboard/events/new/page.tsx`
 22. Create `src/app/admin/dashboard/events/[id]/edit/page.tsx`
 23. Create `src/app/admin/dashboard/announcement/page.tsx`
 
 ### Testing
+
 24. Test full CRUD flow: create event → verify on public site → edit → delete
 25. Test image upload: speaker (square crop) → verify renders correctly
 26. Test sponsor logo upload: rectangle crop → verify renders correctly

@@ -6,13 +6,13 @@ Migrate from Vercel + static TypeScript data + local images to Cloudflare Worker
 
 ## Current State
 
-| Component | Current | Target |
-|-----------|---------|--------|
-| Hosting | Vercel | Cloudflare Workers (`@opennextjs/cloudflare`) |
-| Data | `src/data/events.ts` (static TS array, 8 events) | Cloudflare D1 (SQLite) via Drizzle ORM |
-| Images | `public/images/` (local, 60 speakers, 50 sponsors, etc.) | R2 bucket `academy-assets` at `academy-assets.devmultigroup.com` |
-| OG Images | `@vercel/og` edge function | `next/og` (built-in Next.js, CF Workers compatible) |
-| Announcement | `src/data/announcement.ts` (static file) | D1 `announcements` table |
+| Component    | Current                                                  | Target                                                           |
+| ------------ | -------------------------------------------------------- | ---------------------------------------------------------------- |
+| Hosting      | Vercel                                                   | Cloudflare Workers (`@opennextjs/cloudflare`)                    |
+| Data         | `src/data/events.ts` (static TS array, 8 events)         | Cloudflare D1 (SQLite) via Drizzle ORM                           |
+| Images       | `public/images/` (local, 60 speakers, 50 sponsors, etc.) | R2 bucket `academy-assets` at `academy-assets.devmultigroup.com` |
+| OG Images    | `@vercel/og` edge function                               | `next/og` (built-in Next.js, CF Workers compatible)              |
+| Announcement | `src/data/announcement.ts` (static file)                 | D1 `announcements` table                                         |
 
 ---
 
@@ -54,7 +54,9 @@ export const events = sqliteTable("events", {
 // ── Speakers (per-event) ──
 export const speakers = sqliteTable("speakers", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   fullName: text("full_name").notNull(),
   title: text("title").notNull(),
   company: text("company"),
@@ -67,7 +69,9 @@ export const speakers = sqliteTable("speakers", {
 // ── Organizers (per-event) ──
 export const organizers = sqliteTable("organizers", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   designation: text("designation").notNull(),
   image: text("image").notNull(), // R2 path
@@ -79,7 +83,9 @@ export const organizers = sqliteTable("organizers", {
 // Enforced at application layer, not DB level
 export const sessions = sqliteTable("sessions", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   room: text("room").notNull(),
   speakerName: text("speaker_name").notNull(),
   topic: text("topic"),
@@ -91,7 +97,9 @@ export const sessions = sqliteTable("sessions", {
 // ── Sponsors (per-event) ──
 export const sponsors = sqliteTable("sponsors", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   tier: text("tier").notNull(), // "platin" | "altın" | "gümüş" | "bronz" | ""
   sponsorSlug: text("sponsor_slug").notNull(),
   sortOrder: integer("sort_order").notNull().default(0),
@@ -100,7 +108,9 @@ export const sponsors = sqliteTable("sponsors", {
 // ── Tickets (per-event, optional) ──
 export const tickets = sqliteTable("tickets", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   type: text("type").notNull(),
   description: text("description").notNull(),
   price: real("price").notNull(),
@@ -112,7 +122,9 @@ export const tickets = sqliteTable("tickets", {
 // ── Event Images (per-event) ──
 export const eventImages = sqliteTable("event_images", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   url: text("url").notNull(), // R2 path
   sortOrder: integer("sort_order").notNull().default(0),
 });
@@ -120,7 +132,9 @@ export const eventImages = sqliteTable("event_images", {
 // ── Initial Metrics (per-event, max 3 enforced at app layer) ──
 export const initialMetrics = sqliteTable("initial_metrics", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
   value: integer("value").notNull(),
   sortOrder: integer("sort_order").notNull().default(0),
@@ -129,7 +143,9 @@ export const initialMetrics = sqliteTable("initial_metrics", {
 // ── After Metrics (per-event, optional, 1:1) ──
 export const afterMetrics = sqliteTable("after_metrics", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  eventId: integer("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   applications: text("applications").notNull(),
   vipGuests: text("vip_guests").notNull(),
   supporter: text("supporter").notNull(),
@@ -155,14 +171,14 @@ export const announcements = sqliteTable("announcements", {
 
 ### Schema Design Notes
 
-| Decision | Rationale |
-|----------|-----------|
-| Per-event speakers/organizers | User preference; simpler schema; same speaker can have different titles/companies per event |
-| Location/ColorPalette as flat columns | 1:1 relationship with event, no benefit from separate table |
-| Session nullable fields | DB allows nulls for `topic`, `startTime`, `endTime`; app layer validates Network vs non-Network rooms |
-| Ticket perks as JSON text | Simple string array, only read/written atomically, never queried individually |
-| Max 3 initial metrics | Enforced at app layer (check `count` before insert), not DB constraint |
-| Cascade deletes | All child tables cascade on event deletion |
+| Decision                              | Rationale                                                                                             |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Per-event speakers/organizers         | User preference; simpler schema; same speaker can have different titles/companies per event           |
+| Location/ColorPalette as flat columns | 1:1 relationship with event, no benefit from separate table                                           |
+| Session nullable fields               | DB allows nulls for `topic`, `startTime`, `endTime`; app layer validates Network vs non-Network rooms |
+| Ticket perks as JSON text             | Simple string array, only read/written atomically, never queried individually                         |
+| Max 3 initial metrics                 | Enforced at app layer (check `count` before insert), not DB constraint                                |
+| Cascade deletes                       | All child tables cascade on event deletion                                                            |
 
 ---
 
@@ -198,16 +214,16 @@ academy-assets/
 
 Based on current data, the event slugs (via `slugify()`) are:
 
-| Event Name | Slug (R2 directory) |
-|------------|---------------------|
+| Event Name                                          | Slug (R2 directory)                                   |
+| --------------------------------------------------- | ----------------------------------------------------- |
 | Foundations of Web Development Certification Course | `foundations-of-web-development-certification-course` |
-| Web Developer Conference 2025 | `web-developer-conference-2025` |
-| Data Science Summit 2025 | `data-science-summit-2025` |
-| MultiGroup Developer Gathering 2025 | `multigroup-developer-gathering-2025` |
-| Web Developer Summit 2025 | `web-developer-summit-2025` |
-| Mobile Developer Conference 2025 | `mobile-developer-conference-2025` |
-| Mobile Developer Conference 2024 | `mobile-developer-conference-2024` |
-| Mobile Developer Conference 2023 | `mobile-developer-conference-2023` |
+| Web Developer Conference 2025                       | `web-developer-conference-2025`                       |
+| Data Science Summit 2025                            | `data-science-summit-2025`                            |
+| MultiGroup Developer Gathering 2025                 | `multigroup-developer-gathering-2025`                 |
+| Web Developer Summit 2025                           | `web-developer-summit-2025`                           |
+| Mobile Developer Conference 2025                    | `mobile-developer-conference-2025`                    |
+| Mobile Developer Conference 2024                    | `mobile-developer-conference-2024`                    |
+| Mobile Developer Conference 2023                    | `mobile-developer-conference-2023`                    |
 
 ### Image Migration Notes
 
@@ -280,29 +296,79 @@ export async function getAllEvents(): Promise<Event[]> {
   const db = await getDb();
   const allEvents = await db.select().from(schema.events);
 
-  return Promise.all(allEvents.map(async (e) => {
-    const [eventSpeakers, eventOrganizers, eventSessions, eventSponsors,
-           eventTickets, eventImages, eventMetrics, eventAfterMetrics] = await Promise.all([
-      db.select().from(schema.speakers).where(eq(schema.speakers.eventId, e.id)).orderBy(schema.speakers.sortOrder),
-      db.select().from(schema.organizers).where(eq(schema.organizers.eventId, e.id)).orderBy(schema.organizers.sortOrder),
-      db.select().from(schema.sessions).where(eq(schema.sessions.eventId, e.id)).orderBy(schema.sessions.sortOrder),
-      db.select().from(schema.sponsors).where(eq(schema.sponsors.eventId, e.id)).orderBy(schema.sponsors.sortOrder),
-      db.select().from(schema.tickets).where(eq(schema.tickets.eventId, e.id)).orderBy(schema.tickets.sortOrder),
-      db.select().from(schema.eventImages).where(eq(schema.eventImages.eventId, e.id)).orderBy(schema.eventImages.sortOrder),
-      db.select().from(schema.initialMetrics).where(eq(schema.initialMetrics.eventId, e.id)).orderBy(schema.initialMetrics.sortOrder),
-      db.select().from(schema.afterMetrics).where(eq(schema.afterMetrics.eventId, e.id)),
-    ]);
+  return Promise.all(
+    allEvents.map(async (e) => {
+      const [
+        eventSpeakers,
+        eventOrganizers,
+        eventSessions,
+        eventSponsors,
+        eventTickets,
+        eventImages,
+        eventMetrics,
+        eventAfterMetrics,
+      ] = await Promise.all([
+        db
+          .select()
+          .from(schema.speakers)
+          .where(eq(schema.speakers.eventId, e.id))
+          .orderBy(schema.speakers.sortOrder),
+        db
+          .select()
+          .from(schema.organizers)
+          .where(eq(schema.organizers.eventId, e.id))
+          .orderBy(schema.organizers.sortOrder),
+        db
+          .select()
+          .from(schema.sessions)
+          .where(eq(schema.sessions.eventId, e.id))
+          .orderBy(schema.sessions.sortOrder),
+        db
+          .select()
+          .from(schema.sponsors)
+          .where(eq(schema.sponsors.eventId, e.id))
+          .orderBy(schema.sponsors.sortOrder),
+        db
+          .select()
+          .from(schema.tickets)
+          .where(eq(schema.tickets.eventId, e.id))
+          .orderBy(schema.tickets.sortOrder),
+        db
+          .select()
+          .from(schema.eventImages)
+          .where(eq(schema.eventImages.eventId, e.id))
+          .orderBy(schema.eventImages.sortOrder),
+        db
+          .select()
+          .from(schema.initialMetrics)
+          .where(eq(schema.initialMetrics.eventId, e.id))
+          .orderBy(schema.initialMetrics.sortOrder),
+        db
+          .select()
+          .from(schema.afterMetrics)
+          .where(eq(schema.afterMetrics.eventId, e.id)),
+      ]);
 
-    return reconstructEvent(e, eventSpeakers, eventOrganizers, eventSessions,
-      eventSponsors, eventTickets, eventImages, eventMetrics, eventAfterMetrics[0]);
-  }));
+      return reconstructEvent(
+        e,
+        eventSpeakers,
+        eventOrganizers,
+        eventSessions,
+        eventSponsors,
+        eventTickets,
+        eventImages,
+        eventMetrics,
+        eventAfterMetrics[0],
+      );
+    }),
+  );
 }
 
 export async function getEventBySlug(slug: string): Promise<Event | null> {
   // Query all events and filter by slugified name
   // (slugify happens at app layer to match current behavior)
   const allEvents = await getAllEvents();
-  return allEvents.find(e => slugify(e.name) === slug) || null;
+  return allEvents.find((e) => slugify(e.name) === slug) || null;
 }
 
 export async function getAnnouncement() {
@@ -313,6 +379,7 @@ export async function getAnnouncement() {
 ```
 
 The `reconstructEvent()` function maps flat DB columns back to nested `Event` type:
+
 - `locationName` + `locationSubtext` + `locationLatitude` + `locationLongitude` → `location: Location`
 - `colorPrimary` + ... → `colorPalette: ColorPalette`
 - Speaker/organizer/session/sponsor rows → arrays
@@ -342,7 +409,10 @@ export async function GET() {
 import { getEventBySlug } from "@/db/queries";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ slug: string }> },
+) {
   const { slug } = await params;
   const event = await getEventBySlug(slug);
   if (!event) return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -385,7 +455,11 @@ export function imageUrl(path: string): string {
 /**
  * Constructs per-event image URL for speakers, sponsors, organizers
  */
-export function eventImageUrl(eventSlug: string, category: string, filename: string): string {
+export function eventImageUrl(
+  eventSlug: string,
+  category: string,
+  filename: string,
+): string {
   if (!R2_BASE) return `/images/${category}/${filename}`;
   return `${R2_BASE}/${eventSlug}/${category}/${filename}`;
 }
@@ -395,17 +469,17 @@ export function eventImageUrl(eventSlug: string, category: string, filename: str
 
 All image paths must switch from direct `/images/...` to using these helpers:
 
-| File | Current Pattern | New Pattern |
-|------|----------------|-------------|
-| `speaker-components/speakers.tsx` | `/images/speakers/${slugify(fullName)}.webp` | `eventImageUrl(eventSlug, "speakers", slugify(fullName) + ".webp")` |
-| `speaker-components/sponsors.tsx` | `/images/sponsors/${sponsorSlug}.webp` | `eventImageUrl(eventSlug, "sponsors", sponsorSlug + ".webp")` |
-| `speaker-components/sponsors-slider.tsx` | `/images/sponsors/${sponsorSlug}.webp` | `eventImageUrl(eventSlug, "sponsors", sponsorSlug + ".webp")` |
+| File                                       | Current Pattern                                 | New Pattern                                                            |
+| ------------------------------------------ | ----------------------------------------------- | ---------------------------------------------------------------------- |
+| `speaker-components/speakers.tsx`          | `/images/speakers/${slugify(fullName)}.webp`    | `eventImageUrl(eventSlug, "speakers", slugify(fullName) + ".webp")`    |
+| `speaker-components/sponsors.tsx`          | `/images/sponsors/${sponsorSlug}.webp`          | `eventImageUrl(eventSlug, "sponsors", sponsorSlug + ".webp")`          |
+| `speaker-components/sponsors-slider.tsx`   | `/images/sponsors/${sponsorSlug}.webp`          | `eventImageUrl(eventSlug, "sponsors", sponsorSlug + ".webp")`          |
 | `speaker-components/session-container.tsx` | `/images/speakers/${slugify(speakerName)}.webp` | `eventImageUrl(eventSlug, "speakers", slugify(speakerName) + ".webp")` |
-| `event-page/EventPage.tsx` | `/images/mockups/${slugify(event.name)}.webp` | `eventImageUrl(eventSlug, "mockup", "mockup.webp")` |
-| `event-components/event-card.tsx` | `/images/banners/${baseName}-${year}.webp` | `eventImageUrl(eventSlug, "banner", "banner.webp")` |
-| `navigation/navbar.tsx` | `/images/logo/...` | `imageUrl("/images/logo/...")` → uses `shared/logo/` |
-| `navigation/footer.tsx` | `/images/logo/...` | `imageUrl("/images/logo/...")` |
-| `ui/animated-tooltip.tsx` | `item.image` (organizer) | Already a full path, stored in DB as R2 URL |
+| `event-page/EventPage.tsx`                 | `/images/mockups/${slugify(event.name)}.webp`   | `eventImageUrl(eventSlug, "mockup", "mockup.webp")`                    |
+| `event-components/event-card.tsx`          | `/images/banners/${baseName}-${year}.webp`      | `eventImageUrl(eventSlug, "banner", "banner.webp")`                    |
+| `navigation/navbar.tsx`                    | `/images/logo/...`                              | `imageUrl("/images/logo/...")` → uses `shared/logo/`                   |
+| `navigation/footer.tsx`                    | `/images/logo/...`                              | `imageUrl("/images/logo/...")`                                         |
+| `ui/animated-tooltip.tsx`                  | `item.image` (organizer)                        | Already a full path, stored in DB as R2 URL                            |
 
 **Note:** The `eventSlug` must be passed down as a prop to components that reference per-event images. This is a key interface change — components like `Speakers`, `Sponsors`, `SessionContainer` need an additional `eventSlug` prop.
 
@@ -467,22 +541,26 @@ The `EventColorProvider` currently uses static `events` to find the current even
 ### `src/app/(pages)/page.tsx` (Home)
 
 Currently calls `getLatestNavigableEvent()` which imports static data. After migration:
+
 - Fetch from `/api/events` on mount, or
 - Receive event data from a server component wrapper
 
 ### `src/app/(pages)/etkinlikler/page.tsx` (Events List)
 
 Currently imports `events` directly. After migration:
+
 - Fetch all events from `/api/events`
 
 ### `src/app/(pages)/etkinlikler/[eventName]/page.tsx` (Event Detail)
 
 Currently calls `getEventBySlug()`. After migration:
+
 - Fetch from `/api/events/[slug]`
 
 ### `src/app/layout.tsx`
 
 Currently calls `getLatestEventLink()` synchronously. This is a Server Component, so it can:
+
 - Use `getDb()` directly to query the latest event link
 - Pass it to `<Navbar>` as before
 
@@ -513,6 +591,7 @@ The rest of the OG route stays the same — the `ImageResponse` API is identical
 Add `prefetch={false}` to all `<Link>` components for Cloudflare optimization.
 
 Files using `next/link`:
+
 - `src/components/event-components/action-card.tsx`
 - `src/components/navigation/footer.tsx`
 - Any other files discovered during implementation
@@ -706,6 +785,7 @@ This script uploads local images to R2 in per-event directory structure.
 Execute in this order to minimize broken states:
 
 ### Infrastructure Setup
+
 1. Install dependencies: `drizzle-orm`, `@opennextjs/cloudflare`, `wrangler`, `drizzle-kit`, `tsx`
 2. Create D1 database: `wrangler d1 create academy-db`
 3. Create R2 bucket: `wrangler r2 bucket create academy-assets`
@@ -715,6 +795,7 @@ Execute in this order to minimize broken states:
 7. Create `.env.local` from template
 
 ### Schema & Data
+
 8. Create `src/db/schema.ts`
 9. Run `npm run db:generate` → produces SQL migration files in `drizzle/migrations/`
 10. Apply migrations locally: `npm run db:migrate:local`
@@ -722,6 +803,7 @@ Execute in this order to minimize broken states:
 12. Create and run `scripts/upload-r2.ts` to upload images to R2
 
 ### Code Changes
+
 13. Create `src/db/index.ts` (DB client)
 14. Create `src/db/queries.ts` (query functions)
 15. Create `src/lib/image-url.ts` (R2 URL helper)
@@ -736,6 +818,7 @@ Execute in this order to minimize broken states:
 24. Create `open-next.config.ts`
 
 ### Deploy
+
 25. Test locally with `wrangler dev` (local D1 + R2 public URL)
 26. Apply migrations remotely: `npm run db:migrate:remote`
 27. Seed remote D1
@@ -746,14 +829,14 @@ Execute in this order to minimize broken states:
 
 ## 17. Risks & Mitigations
 
-| Risk | Mitigation |
-|------|------------|
+| Risk                                                             | Mitigation                                                                                                                                  |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | Client-side data fetching latency (all pages are `"use client"`) | Add loading states matching existing `loading.tsx` skeleton; consider converting critical pages to Server Components if performance is poor |
-| Images 404 during local dev without R2 | `imageUrl()` falls back to local `/images/` when `NEXT_PUBLIC_R2_URL` is empty |
-| D1 query complexity (8+ joins per event) | Use `Promise.all` for parallel queries; consider caching with `Cache-Control` headers on API responses |
-| `@react-three/fiber` + Workers bundling | Client-only library, should not affect server bundle; monitor during build |
-| `next/og` compatibility on CF Workers | Test early; fallback to `satori` + `resvg-wasm` if needed |
-| Organizer image paths changing | Currently stored as `/images/organizers/serkan-alc.webp`; must update to R2 URL in DB seed script |
+| Images 404 during local dev without R2                           | `imageUrl()` falls back to local `/images/` when `NEXT_PUBLIC_R2_URL` is empty                                                              |
+| D1 query complexity (8+ joins per event)                         | Use `Promise.all` for parallel queries; consider caching with `Cache-Control` headers on API responses                                      |
+| `@react-three/fiber` + Workers bundling                          | Client-only library, should not affect server bundle; monitor during build                                                                  |
+| `next/og` compatibility on CF Workers                            | Test early; fallback to `satori` + `resvg-wasm` if needed                                                                                   |
+| Organizer image paths changing                                   | Currently stored as `/images/organizers/serkan-alc.webp`; must update to R2 URL in DB seed script                                           |
 
 ---
 

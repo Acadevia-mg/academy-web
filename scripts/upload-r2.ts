@@ -137,11 +137,7 @@ async function main() {
     "logo-wide-dark.webp",
   ];
   for (const logo of logos) {
-    upload(
-      join(publicDir, "images/logo", logo),
-      `shared/logo/${logo}`,
-      remote,
-    );
+    upload(join(publicDir, "images/logo", logo), `shared/logo/${logo}`, remote);
   }
 
   // Reserved mockup (shared)
