@@ -12,10 +12,11 @@ export function getFormattedDate(date: string) {
 }
 
 export function formatIsoDate(isoDate: string): string {
+  if (!isoDate) return "";
   const date = new Date(isoDate);
 
   if (isNaN(date.getTime())) {
-    throw new Error("Invalid ISO date provided.");
+    return "";
   }
 
   const day = date.getDate();

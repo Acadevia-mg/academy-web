@@ -3,6 +3,16 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Event } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Plus } from "lucide-react";
 
 export default function DashboardPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -34,49 +44,51 @@ export default function DashboardPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Etkinlikler</h1>
-        <button
-          onClick={() => router.push("/admin/dashboard/events/new")}
-          className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
-        >
-          + Yeni Etkinlik
-        </button>
+        <h1 className="text-2xl font-bold text-gray-900">Events</h1>
+        <Button onClick={() => router.push("/admin/dashboard/events/new")}>
+          <Plus className="h-4 w-4 mr-1" />
+          New Event
+        </Button>
       </div>
 
       <div className="space-y-3">
         {events.map((event) => (
-          <div
+          <Card
             key={event.id}
-            className="bg-white rounded-lg border border-gray-200 p-4 flex items-center justify-between hover:shadow-sm transition-shadow"
+            className="hover:shadow-sm transition-shadow cursor-pointer"
+            onClick={() => router.push(`/admin/dashboard/events/${event.id}`)}
           >
-            <div>
-              <h3 className="font-medium text-gray-900">{event.name}</h3>
-              <div className="flex items-center gap-3 mt-1 text-sm text-gray-500">
-                <span>
-                  {new Date(event.date).toLocaleDateString("tr-TR", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </span>
-                <span>{event.location.name}</span>
-                {event.navigable !== false && (
-                  <span className="bg-green-100 text-green-800 px-2 py-0.5 rounded text-xs">
-                    navigable
-                  </span>
-                )}
+            <CardHeader className="p-4 pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-base">{event.name}</CardTitle>
+                <div className="flex items-center gap-2">
+                  {event.navigable !== false && (
+                    <Badge variant="secondary">Navigable</Badge>
+                  )}
+                  {event.navigable === false && (
+                    <Badge variant="outline">Hidden</Badge>
+                  )}
+                </div>
               </div>
-            </div>
-            <button
-              onClick={() =>
-                router.push(`/admin/dashboard/events/${event.id}/edit`)
-              }
-              className="text-sm text-gray-600 hover:text-gray-900 font-medium px-3 py-1 rounded border border-gray-200 hover:border-gray-300 transition-colors"
-            >
-              Duzenle
-            </button>
-          </div>
+            </CardHeader>
+            <CardContent className="p-4 pt-0">
+              <CardDescription>
+                {new Date(event.date).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}{" "}
+                &middot; {event.location.name}
+              </CardDescription>
+            </CardContent>
+          </Card>
         ))}
+
+        {events.length === 0 && (
+          <div className="text-center py-12 text-gray-500">
+            No events yet. Create your first event to get started.
+          </div>
+        )}
       </div>
     </div>
   );

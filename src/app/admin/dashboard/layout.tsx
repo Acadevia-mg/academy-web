@@ -1,5 +1,5 @@
 import { AuthGuard } from "@/components/admin/auth-guard";
-import { AdminSidebar } from "@/components/admin/admin-sidebar";
+import { AdminHeader } from "@/components/admin/admin-header";
 
 export default function DashboardLayout({
   children,
@@ -8,9 +8,9 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthGuard>
-      <div className="flex min-h-screen">
-        <AdminSidebar />
-        <main className="flex-1 p-6">{children}</main>
+      <div className="min-h-screen bg-gray-50">
+        <AdminHeader />
+        <main className="p-6 max-w-7xl mx-auto">{children}</main>
       </div>
     </AuthGuard>
   );

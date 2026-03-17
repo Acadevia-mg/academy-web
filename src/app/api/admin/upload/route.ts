@@ -19,8 +19,8 @@ export async function POST(request: Request) {
     );
   }
 
-  // Validate path format
-  if (!/^[\w-]+\/[\w-]+\/[\w.-]+$/.test(path)) {
+  // Validate path format: 2 or 3 segments (e.g. "slug/banner.webp" or "slug/speakers/name.webp")
+  if (!/^[\w-]+(\/[\w.-]+){1,2}$/.test(path)) {
     return NextResponse.json({ error: "Invalid path format" }, { status: 400 });
   }
 
