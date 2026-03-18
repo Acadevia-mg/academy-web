@@ -43,12 +43,14 @@ export default function Events() {
       const nameMatch = event.name.match(/^(.+?)\s+(\d{4})$|^(.+)-(\d{4})$/);
       if (nameMatch) {
         const baseName = nameMatch[1] || nameMatch[3];
-        const year = nameMatch[2] || nameMatch[4];
 
         if (!eventMap.has(baseName)) {
           eventMap.set(baseName, []);
         }
         eventMap.get(baseName)!.push(event);
+      } else {
+        // Events without a year suffix get their own group
+        eventMap.set(event.name, [event]);
       }
     });
 
@@ -71,7 +73,7 @@ export default function Events() {
       groups.push({
         baseEvent: eventList[0],
         availableYears,
-        selectedYear: availableYears[0],
+        selectedYear: availableYears[0] || "",
       });
     });
 

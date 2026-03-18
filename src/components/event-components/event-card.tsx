@@ -68,6 +68,7 @@ export default function EventCard({
   };
 
   const hashtags = getHashtags(event.name);
+  const hasYearSuffix = /\s+\d{4}$|-\d{4}$/.test(event.name);
   const eventTitle = event.name
     .replace(/-\d{4}$/, "")
     .split("-")
@@ -127,10 +128,9 @@ export default function EventCard({
                 .replace(/\s+\d{4}$|-\d{4}$/, "")
                 .toLowerCase()
                 .replace(/ /g, "-");
-              const latestYear = Math.max(
-                ...availableYears.map((y) => parseInt(y)),
-              );
-              const imagePath = `${R2_BASE}/${baseName}-${latestYear}/banner.webp`;
+              const imagePath = hasYearSuffix
+                ? `${R2_BASE}/${baseName}-${Math.max(...availableYears.map((y) => parseInt(y)))}/banner.webp`
+                : `${R2_BASE}/${baseName}/banner.webp`;
               return (
                 <Image
                   src={imagePath}
@@ -175,7 +175,7 @@ export default function EventCard({
             </div>
 
             {/* Year Selector */}
-            <div className="flex items-center gap-1 mt-2 select-none">
+            {availableYears.length > 0 && <div className="flex items-center gap-1 mt-2 select-none">
               {availableYears.map((year) => {
                 const baseName = event.name.replace(/\s+\d{4}$|-\d{4}$/, "");
                 const eventNameForYear = `${baseName} ${year}`;
@@ -234,7 +234,7 @@ export default function EventCard({
                   </button>
                 );
               })}
-            </div>
+            </div>}
 
             {/* Action Button */}
             <div className="flex flex-col sm:flex-row gap-3">
@@ -327,10 +327,9 @@ export default function EventCard({
               .replace(/\s+\d{4}$|-\d{4}$/, "")
               .toLowerCase()
               .replace(/ /g, "-");
-            const latestYear = Math.max(
-              ...availableYears.map((y) => parseInt(y)),
-            );
-            const imagePath = `${R2_BASE}/${baseName}-${latestYear}/banner.webp`;
+            const imagePath = hasYearSuffix
+              ? `${R2_BASE}/${baseName}-${Math.max(...availableYears.map((y) => parseInt(y)))}/banner.webp`
+              : `${R2_BASE}/${baseName}/banner.webp`;
             return (
               <div className="w-full h-full flex items-center justify-center">
                 <Image
