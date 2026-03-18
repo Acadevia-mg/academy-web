@@ -76,6 +76,12 @@ export function AdminHeader({
             Events
           </Link>
           <Link
+            href="/admin/dashboard/blog"
+            className="text-sm text-gray-600 hover:text-gray-900 px-3 py-1.5 rounded-md hover:bg-gray-100 transition-colors"
+          >
+            Blog
+          </Link>
+          <Link
             href="/admin/dashboard/announcement"
             className="text-sm text-gray-600 hover:text-gray-900 px-3 py-1.5 rounded-md hover:bg-gray-100 transition-colors"
           >
